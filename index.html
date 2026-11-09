@@ -1205,6 +1205,73 @@
         const exitFullscreenButton = document.getElementById("exitFullscreenButton");
         let exitButtonTimer = null;
 
+        // ========================================
+        // STEP 43 - KEEP SCREEN AWAKE
+        // ========================================
+
+        let wakeLock = null;
+
+        // Request permission to keep the screen awake
+        async function requestWakeLock() {
+
+            if (!("wakeLock" in navigator)) {
+                console.log("Screen Wake Lock is not supported.");
+                return;
+            }
+
+            try {
+
+                wakeLock = await navigator.wakeLock.request("screen");
+
+                console.log("Screen Wake Lock activated.");
+
+            } catch (error) {
+
+                console.log(
+                    "Unable to activate Screen Wake Lock:",
+                    error
+                );
+
+            }
+        }
+
+        // Release the screen wake lock
+        async function releaseWakeLock() {
+
+            if (wakeLock !== null) {
+
+                try {
+
+                    await wakeLock.release();
+
+                    console.log("Screen Wake Lock released.");
+
+                } catch (error) {
+
+                    console.log("Unable to release Wake Lock:", error);
+
+                }
+
+                wakeLock = null;
+            }
+        }
+
+        // ========================================
+        // STEP 43.4 - RESTORE SCREEN WAKE LOCK
+        // ========================================
+
+        document.addEventListener("visibilitychange", function () {
+
+            if (
+                document.visibilityState === "visible" &&
+                document.body.classList.contains("reading-mode") &&
+                (wakeLock === null || wakeLock.released)
+            ) {
+                requestWakeLock();
+            }
+
+        });
+
         function showExitButton() {
             if (!document.body.classList.contains("reading-mode")) return;
 
@@ -1215,18 +1282,40 @@
             }, 3000);
         }
 
+        // ========================================
+        // STEP 43.2 - ACTIVATE WAKE LOCK
+        // ========================================
+
+        // Enter reading mode
         fullscreenButton.addEventListener("click", function () {
+
             document.body.classList.add("reading-mode");
+
             exitFullscreenButton.hidden = false;
+
             showExitButton();
+
+            // Keep the screen awake while reading
+            requestWakeLock();
+
         });
 
+        // ========================================
+        // STEP 43.3 - RELEASE SCREEN WAKE LOCK
+        // ========================================
+
         function exitReadingMode() {
+
             clearTimeout(exitButtonTimer);
-            exitButtonTimer = null;
+
             document.body.classList.remove("reading-mode");
+
             exitFullscreenButton.classList.remove("auto-hidden");
+
             exitFullscreenButton.hidden = true;
+
+            // Allow the screen to sleep normally again
+            releaseWakeLock();
         }
 
         exitFullscreenButton.addEventListener("click", function (event) {
