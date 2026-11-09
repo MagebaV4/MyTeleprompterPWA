@@ -315,21 +315,32 @@
 
                  /* Exit button stays visible */
 
-                 body.reading-mode #exitFullscreenButton {
-                     display: block;
-                     position: sticky;
-                     top: 0;
-                     z-index: 1001;
-                     margin-left: auto;
-                     margin-bottom: 20px;
-                     padding: 12px 18px;
-                     background-color: #dc3545;
-                     color: white;
-                     border: none;
-                     border-radius: 8px;
-                     font-size: 16px;
-                     cursor: pointer;
-                 }
+                /* Full-screen exit button */
+
+                body.reading-mode #exitFullscreenButton {
+                    display: block;
+                    position: fixed;
+                    top: calc(15px + env(safe-area-inset-top));
+                    right: 15px;
+                    z-index: 1001;
+                    margin: 0;
+                    padding: 10px 15px;
+                    background-color: rgba(220, 53, 69, 0.85);
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    cursor: pointer;
+                    opacity: 1;
+                    transition: opacity 0.3s ease;
+                }
+
+                    /* Hide the button without removing it from the layout */
+
+                    body.reading-mode #exitFullscreenButton.auto-hidden {
+                        opacity: 0;
+                        pointer-events: none;
+                    }
 
              /* Account for iPhone safe areas */
 
@@ -380,8 +391,9 @@
                id="scriptName"
                placeholder="Enter script name..." />
 
-        <button id="saveScriptButton">
+        <button id="saveScriptButton" type="button">
             💾 Save Script
+        </button>
 
             <button id="exportScriptsButton" type="button">
                 💾 Export Scripts
@@ -395,7 +407,6 @@
                    id="importScriptsFile"
                    accept=".json,application/json"
                    style="display:none;">
-        </button>
 
         <div id="savedScripts">
             <p>No saved scripts yet.</p>
@@ -1083,44 +1094,47 @@
         updateMirrorMode();
 
         // ========================================
-        // STEP 32 - FULL-SCREEN READING MODE
+        // STEP 41.4 - IMPROVED FULL-SCREEN MODE
         // ========================================
 
-        const fullscreenButton =
-            document.getElementById("fullscreenButton");
+        const fullscreenButton = document.getElementById("fullscreenButton");
+        const exitFullscreenButton = document.getElementById("exitFullscreenButton");
+        let exitButtonTimer = null;
 
-        const exitFullscreenButton =
-            document.getElementById("exitFullscreenButton");
+        function showExitButton() {
+            if (!document.body.classList.contains("reading-mode")) return;
 
-        // Enter reading mode
+            exitFullscreenButton.classList.remove("auto-hidden");
+            clearTimeout(exitButtonTimer);
+            exitButtonTimer = setTimeout(function () {
+                exitFullscreenButton.classList.add("auto-hidden");
+            }, 3000);
+        }
+
         fullscreenButton.addEventListener("click", function () {
-
             document.body.classList.add("reading-mode");
-
             exitFullscreenButton.hidden = false;
-
+            showExitButton();
         });
 
-        // Exit reading mode
-        exitFullscreenButton.addEventListener("click", function () {
-
+        function exitReadingMode() {
+            clearTimeout(exitButtonTimer);
+            exitButtonTimer = null;
             document.body.classList.remove("reading-mode");
-
+            exitFullscreenButton.classList.remove("auto-hidden");
             exitFullscreenButton.hidden = true;
+        }
 
+        exitFullscreenButton.addEventListener("click", function (event) {
+            event.stopPropagation();
+            exitReadingMode();
         });
 
-        // Allow Escape key to exit on computers
+        // Tap anywhere in the reading area to reveal the exit button.
+        teleprompter.addEventListener("click", showExitButton);
+
         document.addEventListener("keydown", function (event) {
-
-            if (event.key === "Escape") {
-
-                document.body.classList.remove("reading-mode");
-
-                exitFullscreenButton.hidden = true;
-
-            }
-
+            if (event.key === "Escape") exitReadingMode();
         });
 
         // ========================================
