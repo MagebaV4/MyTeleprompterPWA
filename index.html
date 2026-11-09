@@ -382,6 +382,19 @@
 
         <button id="saveScriptButton">
             💾 Save Script
+
+            <button id="exportScriptsButton" type="button">
+                💾 Export Scripts
+            </button>
+
+            <button id="importScriptsButton" type="button">
+                📂 Import Scripts
+            </button>
+
+            <input type="file"
+                   id="importScriptsFile"
+                   accept=".json,application/json"
+                   style="display:none;">
         </button>
 
         <div id="savedScripts">
@@ -1105,6 +1118,181 @@
                 document.body.classList.remove("reading-mode");
 
                 exitFullscreenButton.hidden = true;
+
+            }
+
+        });
+
+        // ========================================
+        // STEP 40 - EXPORT SAVED SCRIPTS
+        // ========================================
+
+        const exportScriptsButton =
+            document.getElementById("exportScriptsButton");
+
+        exportScriptsButton.addEventListener("click", function () {
+
+            const scripts = getSavedScripts();
+
+            if (Object.keys(scripts).length === 0) {
+                alert("There are no saved scripts to export.");
+                return;
+            }
+
+            const backup = {
+                app: "MyTeleprompter",
+                version: 1,
+                exportedAt: new Date().toISOString(),
+                scripts: scripts
+            };
+
+            const json = JSON.stringify(backup, null, 2);
+
+            const blob = new Blob(
+                [json],
+                { type: "application/json" }
+            );
+
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement("a");
+
+            link.href = url;
+            link.download = "MyTeleprompter-Backup.json";
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.body.removeChild(link);
+
+            setTimeout(function () {
+                URL.revokeObjectURL(url);
+            }, 1000);
+
+        });
+
+        // ========================================
+        // STEP 40.2 - IMPORT SAVED SCRIPTS
+        // ========================================
+
+        const importScriptsButton =
+            document.getElementById("importScriptsButton");
+
+        const importScriptsFile =
+            document.getElementById("importScriptsFile");
+
+        // Open the file picker
+        importScriptsButton.addEventListener("click", function () {
+            importScriptsFile.click();
+        });
+
+        // Import selected backup
+        importScriptsFile.addEventListener("change", async function () {
+
+            const file = importScriptsFile.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            try {
+
+                const fileContents = await file.text();
+
+                const backup = JSON.parse(fileContents);
+
+                // Validate the backup
+                if (
+                    backup.app !== "MyTeleprompter" ||
+                    backup.version !== 1 ||
+                    !backup.scripts ||
+                    typeof backup.scripts !== "object" ||
+                    Array.isArray(backup.scripts)
+                ) {
+                    throw new Error("Invalid MyTeleprompter backup.");
+                }
+
+                // Validate individual scripts
+                const importedScripts = Object.create(null);
+
+                for (const [name, content] of Object.entries(backup.scripts)) {
+
+                    if (
+                        typeof name !== "string" ||
+                        name.trim() === "" ||
+                        typeof content !== "string"
+                    ) {
+                        throw new Error("Backup contains an invalid script.");
+                    }
+
+                    Object.defineProperty(importedScripts, name, {
+                        value: content,
+                        enumerable: true,
+                        writable: true,
+                        configurable: true
+                    });
+                }
+
+                const existingScripts = getSavedScripts();
+
+                // Preserve existing scripts unless user approves replacement
+                let importedCount = 0;
+                let skippedCount = 0;
+
+                for (const [name, content] of Object.entries(importedScripts)) {
+
+                    if (Object.prototype.hasOwnProperty.call(existingScripts, name)) {
+
+                        const replace = confirm(
+                            "A script named '" + name +
+                            "' already exists. Replace it?"
+                        );
+
+                        if (!replace) {
+                            skippedCount++;
+                            continue;
+                        }
+                    }
+
+                    Object.defineProperty(existingScripts, name, {
+                        value: content,
+                        enumerable: true,
+                        writable: true,
+                        configurable: true
+                    });
+
+                    importedCount++;
+                }
+
+                // Save updated script library
+                localStorage.setItem(
+                    LIBRARY_STORAGE_KEY,
+                    JSON.stringify(existingScripts)
+                );
+
+                // Refresh the displayed library
+                displaySavedScripts();
+
+                alert(
+                    "Import complete!\n\n" +
+                    "Imported: " + importedCount + "\n" +
+                    "Skipped: " + skippedCount
+                );
+
+            } catch (error) {
+
+                console.error("Script import failed:", error);
+
+                alert(
+                    "Unable to import this backup. " +
+                    "Please select a valid MyTeleprompter backup file."
+                );
+
+            } finally {
+
+                // Allow the same file to be selected again
+                importScriptsFile.value = "";
 
             }
 
