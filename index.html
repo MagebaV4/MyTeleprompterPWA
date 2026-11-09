@@ -253,6 +253,31 @@
                  font-weight: bold;
              }
 
+        /* ========================================
+   STEP 42 - LINE SPACING CONTROL
+   ======================================== */
+
+        .line-spacing-control {
+            margin-top: 25px;
+            margin-bottom: 30px;
+        }
+
+            .line-spacing-control label {
+                font-size: 20px;
+            }
+
+        #lineSpacingSlider {
+            width: 250px;
+            max-width: 90%;
+            margin-top: 15px;
+            accent-color: #00c8ff;
+        }
+
+        #lineSpacingValue {
+            color: #00c8ff;
+            font-weight: bold;
+        }
+
              /* MIRROR MODE CONTROL */
 
              .mirror-control {
@@ -395,18 +420,18 @@
             💾 Save Script
         </button>
 
-            <button id="exportScriptsButton" type="button">
-                💾 Export Scripts
-            </button>
+        <button id="exportScriptsButton" type="button">
+            💾 Export Scripts
+        </button>
 
-            <button id="importScriptsButton" type="button">
-                📂 Import Scripts
-            </button>
+        <button id="importScriptsButton" type="button">
+            📂 Import Scripts
+        </button>
 
-            <input type="file"
-                   id="importScriptsFile"
-                   accept=".json,application/json"
-                   style="display:none;">
+        <input type="file"
+               id="importScriptsFile"
+               accept=".json,application/json"
+               style="display:none;">
 
         <div id="savedScripts">
             <p>No saved scripts yet.</p>
@@ -533,6 +558,32 @@
                max="60"
                value="30"
                step="2" />
+
+    </div>
+
+    <!-- ========================================
+     STEP 42 - LINE SPACING CONTROL
+     ======================================== -->
+
+
+
+  
+
+    <div class="line-spacing-control">
+
+        <label for="lineSpacingSlider">
+            Line Spacing:
+            <span id="lineSpacingValue">1.6</span>
+        </label>
+
+        <br />
+
+        <input type="range"
+               id="lineSpacingSlider"
+               min="1"
+               max="2.5"
+               value="1.6"
+               step="0.1" />
 
     </div>
 
@@ -1050,6 +1101,59 @@
 
         // Apply the initial font size
         updateFontSize();
+
+        // ========================================
+        // STEP 42.3 - ADJUSTABLE LINE SPACING
+        // ========================================
+
+        const lineSpacingSlider =
+            document.getElementById("lineSpacingSlider");
+
+        const lineSpacingValue =
+            document.getElementById("lineSpacingValue");
+
+        const LINE_SPACING_STORAGE_KEY =
+            "myTeleprompterLineSpacing";
+
+        // Restore previously saved line spacing
+        const savedLineSpacing =
+            localStorage.getItem(LINE_SPACING_STORAGE_KEY);
+
+        if (savedLineSpacing !== null) {
+
+            const spacing = Number(savedLineSpacing);
+
+            if (spacing >= 1 && spacing <= 2.5) {
+                lineSpacingSlider.value = spacing;
+            }
+        }
+
+        // Apply line spacing
+        function updateLineSpacing() {
+
+            const spacing = Number(lineSpacingSlider.value);
+
+            // Change the spacing between lines
+            teleprompter.style.lineHeight = spacing;
+
+            // Update displayed value
+            lineSpacingValue.textContent = spacing.toFixed(1);
+
+            // Remember the setting
+            localStorage.setItem(
+                LINE_SPACING_STORAGE_KEY,
+                spacing.toString()
+            );
+        }
+
+        // Update immediately when slider moves
+        lineSpacingSlider.addEventListener(
+            "input",
+            updateLineSpacing
+        );
+
+        // Apply saved setting when application opens
+        updateLineSpacing();
 
         // ========================================
         // STEP 31 - MIRROR MODE
