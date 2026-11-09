@@ -68,6 +68,32 @@
                      margin-bottom: 50px;
                  }
 
+        /* ========================================
+   STEP 44 - READING GUIDE
+   ======================================== */
+
+        /* Anchor the guide to the reading area */
+        .teleprompter {
+            position: relative;
+        }
+
+        /* Reading guide appearance */
+        .reading-guide {
+            position: sticky;
+            top: 33%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: rgba(0, 200, 255, 0.7);
+            z-index: 5;
+            pointer-events: none;
+        }
+
+            /* Keep the guide hidden when disabled */
+            .reading-guide[hidden] {
+                display: none;
+            }
+
              /* BUTTON CONTROLS */
 
              .controls {
@@ -449,6 +475,16 @@
             ✕ Exit Full Screen
         </button>
 
+        <!-- ========================================
+        STEP 44 - READING GUIDE
+        ======================================== -->
+
+        <div id="readingGuide"
+             class="reading-guide"
+             aria-hidden="true"
+             hidden>
+        </div>
+
         <div class="script-content">
 
             <p>
@@ -567,7 +603,7 @@
 
 
 
-  
+
 
     <div class="line-spacing-control">
 
@@ -594,6 +630,23 @@
         <label for="mirrorToggle">
             <input type="checkbox" id="mirrorToggle" />
             Mirror Mode
+        </label>
+
+    </div>
+
+    <!-- ========================================
+     STEP 44.3 - READING GUIDE CONTROL
+     ======================================== -->
+
+    <div class="mirror-control">
+
+        <label for="readingGuideToggle">
+
+            <input type="checkbox"
+                   id="readingGuideToggle" />
+
+            📍 Reading Guide
+
         </label>
 
     </div>
@@ -1196,6 +1249,49 @@
 
         // Apply saved setting when page loads
         updateMirrorMode();
+
+        // ========================================
+        // STEP 44.4 - READING GUIDE CONTROL
+        // ========================================
+
+        const readingGuideToggle =
+            document.getElementById("readingGuideToggle");
+
+        const readingGuide =
+            document.getElementById("readingGuide");
+
+        const READING_GUIDE_STORAGE_KEY =
+            "myTeleprompterReadingGuide";
+
+        // Restore previously saved preference
+        const savedReadingGuide =
+            localStorage.getItem(READING_GUIDE_STORAGE_KEY);
+
+        if (savedReadingGuide === "true") {
+            readingGuideToggle.checked = true;
+        }
+
+        // Show or hide the reading guide
+        function updateReadingGuide() {
+
+            const isEnabled = readingGuideToggle.checked;
+
+            readingGuide.hidden = !isEnabled;
+
+            localStorage.setItem(
+                READING_GUIDE_STORAGE_KEY,
+                isEnabled.toString()
+            );
+        }
+
+        // Respond when the checkbox changes
+        readingGuideToggle.addEventListener(
+            "change",
+            updateReadingGuide
+        );
+
+        // Apply saved preference when the app opens
+        updateReadingGuide();
 
         // ========================================
         // STEP 41.4 - IMPROVED FULL-SCREEN MODE
