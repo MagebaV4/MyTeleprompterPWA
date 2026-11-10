@@ -94,6 +94,66 @@
                 display: none;
             }
 
+        /* ========================================
+   STEP 46.2 - COUNTDOWN DISPLAY
+   ======================================== */
+
+        .countdown-display {
+            position: sticky;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(80px, 20vw, 150px);
+            font-weight: bold;
+            color: #00c8ff;
+            text-shadow: 0 0 25px rgba(0, 200, 255, 0.7);
+            z-index: 20;
+            pointer-events: none;
+        }
+
+            .countdown-display[hidden] {
+                display: none;
+            }
+
+        /* ========================================
+   STEP 46.2 - COUNTDOWN CONTROL
+   ======================================== */
+
+        .countdown-control {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+            .countdown-control label {
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            .countdown-control select {
+                padding: 12px 16px;
+                font-size: 17px;
+                border: 2px solid #444;
+                border-radius: 10px;
+                background-color: #222;
+                color: white;
+                min-height: 48px;
+                cursor: pointer;
+                touch-action: manipulation;
+            }
+
+                .countdown-control select:focus {
+                    outline: 2px solid #00c8ff;
+                    outline-offset: 2px;
+                }
+
              /* BUTTON CONTROLS */
 
              .controls {
@@ -503,12 +563,23 @@
         </button>
 
         <!-- ========================================
-        STEP 44 - READING GUIDE
-        ======================================== -->
+    STEP 44 - READING GUIDE
+    ======================================== -->
 
         <div id="readingGuide"
              class="reading-guide"
              aria-hidden="true"
+             hidden>
+        </div>
+
+        <!-- ========================================
+    STEP 46.2 - COUNTDOWN DISPLAY
+    ======================================== -->
+
+        <div id="countdownDisplay"
+             class="countdown-display"
+             aria-live="polite"
+             aria-atomic="true"
              hidden>
         </div>
 
@@ -581,6 +652,30 @@
         <button id="resetButton">
             ↺ Reset
         </button>
+
+    </div>
+
+    <!-- ========================================
+     STEP 46.2 - COUNTDOWN TIMER CONTROL
+     ======================================== -->
+
+    <div class="countdown-control">
+
+        <label for="countdownSelect">
+            ⏱️ Start Countdown:
+        </label>
+
+        <select id="countdownSelect">
+
+            <option value="0">Off</option>
+
+            <option value="3">3 Seconds</option>
+
+            <option value="5">5 Seconds</option>
+
+            <option value="10">10 Seconds</option>
+
+        </select>
 
     </div>
 
@@ -755,22 +850,158 @@
 
         }
 
+        // ========================================
+        // STEP 46.2 - COUNTDOWN TIMER
+        // ========================================
 
-        // START BUTTON
+        const countdownSelect =
+            document.getElementById("countdownSelect");
+
+        const countdownDisplay =
+            document.getElementById("countdownDisplay");
+
+        let countdownInterval = null;
+        let countdownActive = false;
+        let countdownGoTimeout = null;
+
+        let hasStartedScrolling = false;
+
+        const COUNTDOWN_STORAGE_KEY =
+            "myTeleprompterCountdown";
+
+        // Restore saved countdown preference
+        const savedCountdown =
+            localStorage.getItem(COUNTDOWN_STORAGE_KEY);
+
+        if (["0", "3", "5", "10"].includes(savedCountdown)) {
+            countdownSelect.value = savedCountdown;
+        }
+
+        // Save countdown preference when changed
+        countdownSelect.addEventListener("change", function () {
+            localStorage.setItem(
+                COUNTDOWN_STORAGE_KEY,
+                countdownSelect.value
+            );
+        });
+
+        // ========================================
+        // STEP 46.2 - CANCEL COUNTDOWN
+        // ========================================
+
+        function cancelCountdown() {
+
+            // Stop the countdown interval
+            if (countdownInterval !== null) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+
+            // Stop the GO! delay
+            if (countdownGoTimeout !== null) {
+                clearTimeout(countdownGoTimeout);
+                countdownGoTimeout = null;
+            }
+
+            // Reset countdown state
+            countdownActive = false;
+
+            // Hide the countdown display
+            countdownDisplay.hidden = true;
+            countdownDisplay.textContent = "";
+        }
+
+        // ========================================
+        // STEP 46.2 - RUN COUNTDOWN
+        // ========================================
+
+        function runCountdown(seconds, onComplete) {
+
+            cancelCountdown();
+
+            countdownActive = true;
+
+            let remaining = seconds;
+
+            countdownDisplay.hidden = false;
+            countdownDisplay.textContent = remaining;
+
+            countdownInterval = setInterval(function () {
+
+                remaining--;
+
+                if (remaining > 0) {
+
+                    countdownDisplay.textContent = remaining;
+
+                } else {
+
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+
+                    countdownDisplay.textContent = "GO!";
+
+                    countdownActive = false;
+
+                    countdownGoTimeout = setTimeout(function () {
+
+                        countdownGoTimeout = null;
+
+                        countdownDisplay.hidden = true;
+                        countdownDisplay.textContent = "";
+
+                        onComplete();
+
+                    }, 500);
+                }
+
+            }, 1000);
+        }
+
+        // ========================================
+        // STEP 46.2.9 - START WITH COUNTDOWN
+        // ========================================
 
         startButton.addEventListener("click", function () {
 
-            if (isScrolling) {
+            // Prevent duplicate countdowns or scrolling
+            if (isScrolling || countdownActive) {
                 return;
             }
 
-            scrollPosition = teleprompter.scrollTop;
+            // Start the existing scrolling animation
+            function beginScrolling() {
 
-            isScrolling = true;
+                scrollPosition = teleprompter.scrollTop;
 
-            lastFrameTime = null;
+                isScrolling = true;
 
-            animationId = requestAnimationFrame(scrollText);
+                // Remember that scrolling has started
+                hasStartedScrolling = true;
+
+                lastFrameTime = null;
+
+                animationId = requestAnimationFrame(scrollText);
+            }
+
+            // Read the selected countdown duration
+            const seconds = Number(countdownSelect.value);
+
+            // Resume immediately if scrolling has started before
+            if (hasStartedScrolling) {
+
+                beginScrolling();
+
+            } else if (seconds > 0) {
+
+                // First start: run the selected countdown
+                runCountdown(seconds, beginScrolling);
+
+            } else {
+
+                // Countdown disabled: start immediately
+                beginScrolling();
+            }
 
         });
 
@@ -778,6 +1009,8 @@
         // PAUSE BUTTON
 
         pauseButton.addEventListener("click", function () {
+
+            cancelCountdown();
 
             isScrolling = false;
 
@@ -797,6 +1030,10 @@
         // RESET BUTTON
 
         resetButton.addEventListener("click", function () {
+
+            cancelCountdown();
+
+            hasStartedScrolling = false;
 
             isScrolling = false;
 
