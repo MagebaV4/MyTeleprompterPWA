@@ -104,15 +104,18 @@
                  flex-wrap: wrap;
              }
 
-                 .controls button {
-                     padding: 15px 30px;
-                     font-size: 20px;
-                     font-weight: bold;
-                     border: none;
-                     border-radius: 10px;
-                     cursor: pointer;
-                     color: white;
-                 }
+                .controls button {
+                    padding: 18px 32px;
+                    font-size: 22px;
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 12px;
+                    cursor: pointer;
+                    color: white;
+                    min-height: 56px;
+                    min-width: 110px;
+                    touch-action: manipulation;
+                }
 
              #startButton {
                  background-color: #28a745;
@@ -174,6 +177,30 @@
                      font-size: 16px;
                      padding: 12px 20px;
                  }
+
+                /* ========================================
+   STEP 46 - MOBILE PLAYBACK BUTTONS
+   ======================================== */
+
+                @media (max-width: 600px) {
+
+                    .controls {
+                        display: flex;
+                        flex-wrap: nowrap;
+                        gap: 8px;
+                        width: 100%;
+                    }
+
+                        .controls button {
+                            flex: 1 1 0;
+                            min-width: 0;
+                            min-height: 60px;
+                            padding: 14px 6px;
+                            font-size: 17px;
+                            border-radius: 12px;
+                            white-space: nowrap;
+                        }
+                }
              }
              /* SCRIPT EDITOR */
 
