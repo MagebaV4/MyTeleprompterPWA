@@ -3,7 +3,7 @@
 // VERSION 2 - GITHUB PAGES SUPPORT
 // ========================================
 
-const CACHE_NAME = "myteleprompter-v10";
+const CACHE_NAME = "myteleprompter-v11";
 
 const APP_BASE = self.registration.scope;
 

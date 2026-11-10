@@ -125,6 +125,58 @@
             }
 
         /* ========================================
+   STEP 48 - SCRIPT READING PROGRESS
+   ======================================== */
+
+        .reading-progress {
+            /* ========================================
+   STEP 48.15 - TELEPROMPTER WRAPPER
+   ======================================== */
+            /* STEP 48.17 - TELEPROMPTER WRAPPER */
+
+            .teleprompter-wrapper
+
+        {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin: 20px auto 0;
+            display: flow-root;
+        }
+        position: relative;
+        z-index: 10;;
+        width: fit-content;
+        max-width: 90%;
+        margin: 0 auto 10px;
+        padding: 8px 16px;
+        background-color: rgba(20, 20, 20, 0.9);
+        border: 1px solid #333;
+        border-radius: 20px;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        }
+
+        /* ========================================
+   STEP 48.24 - FULL-SCREEN SCRIPT PROGRESS
+   ======================================== */
+
+        body.reading-mode .reading-progress {
+            position: fixed;
+            top: 75px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1100;
+            margin: 0;
+        }
+
+        #readingProgressValue {
+            color: #00c8ff;
+            font-weight: bold;
+        }
+
+        /* ========================================
    STEP 46.2 - COUNTDOWN DISPLAY
    ======================================== */
 
@@ -193,6 +245,27 @@
                  gap: 15px;
                  flex-wrap: wrap;
              }
+
+        /* STEP 49.6 - FULL-SCREEN CONTROLS */
+
+        body.reading-mode .controls {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1200;
+            margin: 0;
+            width: 95%;
+            max-width: 600px;
+            gap: 8px;
+        }
+
+            /* STEP 49.8 - AUTO-HIDE FULL-SCREEN CONTROLS */
+
+            body.reading-mode .controls.auto-hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
 
                 .controls button {
                     padding: 18px 32px;
@@ -543,9 +616,7 @@
             Load Script
         </button>
 
-        <button id="fullscreenButton">
-            ⛶ Full Screen
-        </button>
+        
 
     </div>
 
@@ -582,174 +653,202 @@
 
     </div>
 
-    <!-- TELEPROMPTER DISPLAY -->
-
-    <div class="teleprompter" id="teleprompter">
-
-        <button id="exitFullscreenButton"
-                type="button"
-                hidden>
-            ✕ Exit Full Screen
-        </button>
+    <!-- STEP 48 - TELEPROMPTER WRAPPER -->
+    <div class="teleprompter-wrapper">
 
         <!-- ========================================
+    STEP 48 - SCRIPT READING PROGRESS
+    ======================================== -->
+
+        <div id="readingProgress"
+             class="reading-progress"
+             aria-live="off">
+
+            📊 Script Progress:
+            <span id="readingProgressValue">0%</span>
+
+        </div>
+
+        <!-- TELEPROMPTER DISPLAY -->
+
+        <div class="teleprompter" id="teleprompter">
+
+            <button id="exitFullscreenButton"
+                    type="button"
+                    hidden>
+                ✕ Exit Full Screen
+            </button>
+
+            <!-- ========================================
         STEP 44 - READING GUIDE
         ======================================== -->
 
-        <div id="readingGuide"
-             class="reading-guide"
-             aria-hidden="true"
-             hidden>
-        </div>
+            <div id="readingGuide"
+                 class="reading-guide"
+                 aria-hidden="true"
+                 hidden>
+            </div>
 
-        <!-- ========================================
+            <!-- ========================================
         STEP 46.2 - COUNTDOWN DISPLAY
         ======================================== -->
 
-        <div id="countdownDisplay"
-             class="countdown-display"
-             aria-live="polite"
-             aria-atomic="true"
-             hidden>
+            <div id="countdownDisplay"
+                 class="countdown-display"
+                 aria-live="polite"
+                 aria-atomic="true"
+                 hidden>
+            </div>
+
+            <!-- ========================================
+        STEP 48 - SCRIPT READING PROGRESS
+        ======================================== -->
+
+
+
+            <div class="script-content">
+
+
+                <p>
+                    Welcome to My Teleprompter!
+                </p>
+
+                <p>
+                    This is my first teleprompter application.
+                </p>
+
+                <p>
+                    Today, we are building something exciting.
+                    A teleprompter application that will help
+                    us read scripts while recording videos.
+                </p>
+
+                <p>
+                    Our application will automatically scroll
+                    text upwards at a comfortable reading speed.
+                </p>
+
+                <p>
+                    We will also be able to pause the scrolling
+                    whenever we need to take a break.
+                </p>
+
+                <p>
+                    Another important feature is the ability
+                    to control the scrolling speed.
+                </p>
+
+                <p>
+                    Some people read slowly while others
+                    prefer a faster reading speed.
+                </p>
+
+                <p>
+                    Eventually, we will be able to enter
+                    our own scripts into the application.
+                </p>
+
+                <p>
+                    We are also planning to make this
+                    teleprompter work beautifully on an iPhone.
+                </p>
+
+                <p>
+                    Thank you for testing My Teleprompter!
+                </p>
+
+            </div>
+
         </div>
 
-        <div class="script-content">
 
-            <p>
-                Welcome to My Teleprompter!
-            </p>
+        <!-- BUTTONS -->
 
-            <p>
-                This is my first teleprompter application.
-            </p>
+        <div class="controls">
 
-            <p>
-                Today, we are building something exciting.
-                A teleprompter application that will help
-                us read scripts while recording videos.
-            </p>
+            <button id="startButton">
+                ▶ Start
+            </button>
 
-            <p>
-                Our application will automatically scroll
-                text upwards at a comfortable reading speed.
-            </p>
+            <button id="pauseButton">
+                ⏸ Pause
+            </button>
 
-            <p>
-                We will also be able to pause the scrolling
-                whenever we need to take a break.
-            </p>
+            <button id="resetButton">
+                ↺ Reset
+            </button>
 
-            <p>
-                Another important feature is the ability
-                to control the scrolling speed.
-            </p>
-
-            <p>
-                Some people read slowly while others
-                prefer a faster reading speed.
-            </p>
-
-            <p>
-                Eventually, we will be able to enter
-                our own scripts into the application.
-            </p>
-
-            <p>
-                We are also planning to make this
-                teleprompter work beautifully on an iPhone.
-            </p>
-
-            <p>
-                Thank you for testing My Teleprompter!
-            </p>
+            <button id="fullscreenButton">
+                ⛶ Full Screen
+            </button>
 
         </div>
 
-    </div>
-
-    <!-- BUTTONS -->
-
-    <div class="controls">
-
-        <button id="startButton">
-            ▶ Start
-        </button>
-
-        <button id="pauseButton">
-            ⏸ Pause
-        </button>
-
-        <button id="resetButton">
-            ↺ Reset
-        </button>
-
-    </div>
-
-    <!-- ========================================
+        <!-- ========================================
      STEP 46.2 - COUNTDOWN TIMER CONTROL
      ======================================== -->
 
-    <div class="countdown-control">
+        <div class="countdown-control">
 
-        <label for="countdownSelect">
-            ⏱️ Start Countdown:
-        </label>
+            <label for="countdownSelect">
+                ⏱️ Start Countdown:
+            </label>
 
-        <select id="countdownSelect">
+            <select id="countdownSelect">
 
-            <option value="0">Off</option>
+                <option value="0">Off</option>
 
-            <option value="3">3 Seconds</option>
+                <option value="3">3 Seconds</option>
 
-            <option value="5">5 Seconds</option>
+                <option value="5">5 Seconds</option>
 
-            <option value="10">10 Seconds</option>
+                <option value="10">10 Seconds</option>
 
-        </select>
+            </select>
 
-    </div>
+        </div>
 
-    <!-- SPEED CONTROL -->
+        <!-- SPEED CONTROL -->
 
-    <div class="speed-control">
+        <div class="speed-control">
 
-        <label for="speedSlider">
-            Scrolling Speed:
-            <span id="speedValue">30</span>
-        </label>
+            <label for="speedSlider">
+                Scrolling Speed:
+                <span id="speedValue">30</span>
+            </label>
 
-        <br />
+            <br />
 
-        <input type="range"
-               id="speedSlider"
-               min="5"
-               max="150"
-               value="30"
-               step="5" />
+            <input type="range"
+                   id="speedSlider"
+                   min="5"
+                   max="150"
+                   value="30"
+                   step="5" />
 
-    </div>
+        </div>
 
-    <!-- FONT SIZE CONTROL -->
+        <!-- FONT SIZE CONTROL -->
 
-    <div class="font-control">
+        <div class="font-control">
 
-        <label for="fontSlider">
-            Font Size:
-            <span id="fontValue">30</span>px
-        </label>
+            <label for="fontSlider">
+                Font Size:
+                <span id="fontValue">30</span>px
+            </label>
 
-        <br />
+            <br />
 
-        <input type="range"
-               id="fontSlider"
-               min="18"
-               max="60"
-               value="30"
-               step="2" />
+            <input type="range"
+                   id="fontSlider"
+                   min="18"
+                   max="60"
+                   value="30"
+                   step="2" />
 
-    </div>
+        </div>
 
-    <!-- ========================================
+        <!-- ========================================
      STEP 42 - LINE SPACING CONTROL
      ======================================== -->
 
@@ -757,1256 +856,1296 @@
 
 
 
-    <div class="line-spacing-control">
+        <div class="line-spacing-control">
 
-        <label for="lineSpacingSlider">
-            Line Spacing:
-            <span id="lineSpacingValue">1.6</span>
-        </label>
+            <label for="lineSpacingSlider">
+                Line Spacing:
+                <span id="lineSpacingValue">1.6</span>
+            </label>
 
-        <br />
+            <br />
 
-        <input type="range"
-               id="lineSpacingSlider"
-               min="1"
-               max="2.5"
-               value="1.6"
-               step="0.1" />
+            <input type="range"
+                   id="lineSpacingSlider"
+                   min="1"
+                   max="2.5"
+                   value="1.6"
+                   step="0.1" />
 
-    </div>
+        </div>
 
-    <!-- MIRROR MODE CONTROL -->
+        <!-- MIRROR MODE CONTROL -->
 
-    <div class="mirror-control">
+        <div class="mirror-control">
 
-        <label for="mirrorToggle">
-            <input type="checkbox" id="mirrorToggle" />
-            Mirror Mode
-        </label>
+            <label for="mirrorToggle">
+                <input type="checkbox" id="mirrorToggle" />
+                Mirror Mode
+            </label>
 
-    </div>
+        </div>
 
-    <!-- ========================================
+        <!-- ========================================
      STEP 44.3 - READING GUIDE CONTROL
      ======================================== -->
 
-    <div class="mirror-control">
+        <div class="mirror-control">
 
-        <label for="readingGuideToggle">
+            <label for="readingGuideToggle">
 
-            <input type="checkbox"
-                   id="readingGuideToggle" />
+                <input type="checkbox"
+                       id="readingGuideToggle" />
 
-            📍 Reading Guide
+                📍 Reading Guide
 
-        </label>
+            </label>
 
-    </div>
+        </div>
 
-    <!-- ========================================
+        <!-- ========================================
      STEP 47 - READING GUIDE POSITION
      ======================================== -->
 
-    <div class="reading-guide-position-control">
+        <div class="reading-guide-position-control">
 
-        <label for="readingGuidePositionSlider">
-            📏 Reading Guide Position:
-            <span id="readingGuidePositionValue">33%</span>
-        </label>
+            <label for="readingGuidePositionSlider">
+                📏 Reading Guide Position:
+                <span id="readingGuidePositionValue">33%</span>
+            </label>
 
-        <input type="range"
-               id="readingGuidePositionSlider"
-               min="15"
-               max="75"
-               step="1"
-               value="33" />
+            <input type="range"
+                   id="readingGuidePositionSlider"
+                   min="15"
+                   max="75"
+                   step="1"
+                   value="33" />
 
-    </div>
+        </div>
 
-    <!-- JAVASCRIPT -->
+        <!-- JAVASCRIPT -->
 
-    <script>
+        <script>
 
-        const teleprompter =
-            document.getElementById("teleprompter");
+            const teleprompter =
+                document.getElementById("teleprompter");
 
-        const startButton =
-            document.getElementById("startButton");
+            const startButton =
+                document.getElementById("startButton");
 
-        const pauseButton =
-            document.getElementById("pauseButton");
+            const pauseButton =
+                document.getElementById("pauseButton");
 
-        const resetButton =
-            document.getElementById("resetButton");
+            const resetButton =
+                document.getElementById("resetButton");
 
-        const speedSlider =
-            document.getElementById("speedSlider");
+            const speedSlider =
+                document.getElementById("speedSlider");
 
-        const speedValue =
-            document.getElementById("speedValue");
+            const speedValue =
+                document.getElementById("speedValue");
 
-        let isScrolling = false;
+            let isScrolling = false;
 
-        let scrollSpeed = 30;
+            let scrollSpeed = 30;
 
-        let lastFrameTime = null;
+            let lastFrameTime = null;
 
-        let animationId = null;
+            let animationId = null;
 
-        let scrollPosition = 0;
+            let scrollPosition = 0;
 
 
-        // AUTOMATIC SCROLLING
+            // AUTOMATIC SCROLLING
 
-        function scrollText(timestamp) {
+            function scrollText(timestamp) {
 
-            if (!isScrolling) {
-                return;
-            }
-
-            if (lastFrameTime !== null) {
-
-                const elapsed =
-                    Math.min((timestamp - lastFrameTime) / 1000, 0.1);
-
-                scrollPosition += scrollSpeed * elapsed;
-
-                const maxScroll =
-                    teleprompter.scrollHeight -
-                    teleprompter.clientHeight;
-
-                if (scrollPosition >= maxScroll) {
-
-                    scrollPosition = maxScroll;
-
-                    teleprompter.scrollTop = maxScroll;
-
-                    isScrolling = false;
-
-                    animationId = null;
-
-                    lastFrameTime = null;
-
+                if (!isScrolling) {
                     return;
                 }
 
-                teleprompter.scrollTop = scrollPosition;
+                if (lastFrameTime !== null) {
 
-            }
+                    const elapsed =
+                        Math.min((timestamp - lastFrameTime) / 1000, 0.1);
 
-            lastFrameTime = timestamp;
+                    scrollPosition += scrollSpeed * elapsed;
 
-            animationId = requestAnimationFrame(scrollText);
+                    const maxScroll =
+                        teleprompter.scrollHeight -
+                        teleprompter.clientHeight;
 
-        }
+                    if (scrollPosition >= maxScroll) {
 
-        // ========================================
-        // STEP 46.2 - COUNTDOWN TIMER
-        // ========================================
+                        scrollPosition = maxScroll;
 
-        const countdownSelect =
-            document.getElementById("countdownSelect");
+                        teleprompter.scrollTop = maxScroll;
 
-        const countdownDisplay =
-            document.getElementById("countdownDisplay");
+                        isScrolling = false;
 
-        let countdownInterval = null;
-        let countdownActive = false;
-        let countdownGoTimeout = null;
+                        animationId = null;
 
-        let hasStartedScrolling = false;
+                        lastFrameTime = null;
 
-        const COUNTDOWN_STORAGE_KEY =
-            "myTeleprompterCountdown";
-
-        // Restore saved countdown preference
-        const savedCountdown =
-            localStorage.getItem(COUNTDOWN_STORAGE_KEY);
-
-        if (["0", "3", "5", "10"].includes(savedCountdown)) {
-            countdownSelect.value = savedCountdown;
-        }
-
-        // Save countdown preference when changed
-        countdownSelect.addEventListener("change", function () {
-            localStorage.setItem(
-                COUNTDOWN_STORAGE_KEY,
-                countdownSelect.value
-            );
-        });
-
-        // ========================================
-        // STEP 46.2 - CANCEL COUNTDOWN
-        // ========================================
-
-        function cancelCountdown() {
-
-            // Stop the countdown interval
-            if (countdownInterval !== null) {
-                clearInterval(countdownInterval);
-                countdownInterval = null;
-            }
-
-            // Stop the GO! delay
-            if (countdownGoTimeout !== null) {
-                clearTimeout(countdownGoTimeout);
-                countdownGoTimeout = null;
-            }
-
-            // Reset countdown state
-            countdownActive = false;
-
-            // Hide the countdown display
-            countdownDisplay.hidden = true;
-            countdownDisplay.textContent = "";
-        }
-
-        // ========================================
-        // STEP 46.2 - RUN COUNTDOWN
-        // ========================================
-
-        function runCountdown(seconds, onComplete) {
-
-            cancelCountdown();
-
-            countdownActive = true;
-
-            let remaining = seconds;
-
-            countdownDisplay.hidden = false;
-            countdownDisplay.textContent = remaining;
-
-            countdownInterval = setInterval(function () {
-
-                remaining--;
-
-                if (remaining > 0) {
-
-                    countdownDisplay.textContent = remaining;
-
-                } else {
-
-                    clearInterval(countdownInterval);
-                    countdownInterval = null;
-
-                    countdownDisplay.textContent = "GO!";
-
-                    countdownActive = false;
-
-                    countdownGoTimeout = setTimeout(function () {
-
-                        countdownGoTimeout = null;
-
-                        countdownDisplay.hidden = true;
-                        countdownDisplay.textContent = "";
-
-                        onComplete();
-
-                    }, 500);
-                }
-
-            }, 1000);
-        }
-
-        // ========================================
-        // STEP 46.2.9 - START WITH COUNTDOWN
-        // ========================================
-
-        startButton.addEventListener("click", function () {
-
-            // Prevent duplicate countdowns or scrolling
-            if (isScrolling || countdownActive) {
-                return;
-            }
-
-            // Start the existing scrolling animation
-            function beginScrolling() {
-
-                scrollPosition = teleprompter.scrollTop;
-
-                isScrolling = true;
-
-                // Remember that scrolling has started
-                hasStartedScrolling = true;
-
-                lastFrameTime = null;
-
-                animationId = requestAnimationFrame(scrollText);
-            }
-
-            // Read the selected countdown duration
-            const seconds = Number(countdownSelect.value);
-
-            // Resume immediately if scrolling has started before
-            if (hasStartedScrolling) {
-
-                beginScrolling();
-
-            } else if (seconds > 0) {
-
-                // First start: run the selected countdown
-                runCountdown(seconds, beginScrolling);
-
-            } else {
-
-                // Countdown disabled: start immediately
-                beginScrolling();
-            }
-
-        });
-
-
-        // PAUSE BUTTON
-
-        pauseButton.addEventListener("click", function () {
-
-            cancelCountdown();
-
-            isScrolling = false;
-
-            lastFrameTime = null;
-
-            if (animationId !== null) {
-
-                cancelAnimationFrame(animationId);
-
-                animationId = null;
-
-            }
-
-        });
-
-
-        // RESET BUTTON
-
-        resetButton.addEventListener("click", function () {
-
-            cancelCountdown();
-
-            hasStartedScrolling = false;
-
-            isScrolling = false;
-
-            lastFrameTime = null;
-
-            if (animationId !== null) {
-
-                cancelAnimationFrame(animationId);
-
-                animationId = null;
-
-            }
-
-            scrollPosition = 0;
-
-            teleprompter.scrollTop = 0;
-
-        });
-
-
-        // SPEED CONTROL
-
-        speedSlider.addEventListener("input", function () {
-
-            scrollSpeed = Number(speedSlider.value);
-
-            speedValue.textContent = scrollSpeed;
-
-        });
-
-
-        // KEEP POSITION IN SYNC WITH MANUAL SCROLLING
-
-        teleprompter.addEventListener("scroll", function () {
-
-            if (!isScrolling) {
-
-                scrollPosition = teleprompter.scrollTop;
-
-            }
-
-        });
-
-        // CUSTOM SCRIPT EDITOR
-
-        const scriptInput =
-            document.getElementById("scriptInput");
-
-        const loadScriptButton =
-            document.getElementById("loadScriptButton");
-
-        const scriptContent =
-            document.querySelector(".script-content");
-
-        loadScriptButton.addEventListener("click", function () {
-
-            const newScript = scriptInput.value.trim();
-
-            if (newScript === "") {
-                alert("Please enter your script first.");
-                return;
-            }
-
-            // Stop scrolling
-            isScrolling = false;
-
-            lastFrameTime = null;
-
-            if (animationId !== null) {
-                cancelAnimationFrame(animationId);
-                animationId = null;
-            }
-
-            // Clear previous script safely
-            scriptContent.replaceChildren();
-
-            // Preserve paragraph breaks
-            const paragraphs = newScript.split(/\n\s*\n/);
-
-            paragraphs.forEach(function (text) {
-
-                const paragraph = document.createElement("p");
-
-                paragraph.textContent = text;
-
-                paragraph.style.whiteSpace = "pre-line";
-
-                scriptContent.appendChild(paragraph);
-
-            });
-
-            // Return to beginning
-            scrollPosition = 0;
-
-            teleprompter.scrollTop = 0;
-
-        });
-
-        // ========================================
-        // STEP 27 - AUTOMATIC SCRIPT SAVING
-        // ========================================
-
-        const STORAGE_KEY = "myTeleprompterScript";
-
-        // Save script whenever the user types
-        scriptInput.addEventListener("input", function () {
-
-            localStorage.setItem(
-                STORAGE_KEY,
-                scriptInput.value
-            );
-
-        });
-
-        // Restore saved script when application opens
-        window.addEventListener("DOMContentLoaded", function () {
-
-            const savedScript = localStorage.getItem(STORAGE_KEY);
-
-            if (savedScript !== null) {
-
-                scriptInput.value = savedScript;
-
-                // Automatically load the saved script
-                if (savedScript.trim() !== "") {
-                    loadScriptButton.click();
-                }
-
-            }
-
-        });
-
-        // ========================================
-        // STEP 28.4 - SCRIPT LIBRARY
-        // ========================================
-
-        // Get our library controls
-        const scriptNameInput =
-            document.getElementById("scriptName");
-
-        const saveScriptButton =
-            document.getElementById("saveScriptButton");
-
-        const savedScriptsContainer =
-            document.getElementById("savedScripts");
-
-        // Separate storage key for our script library
-        const LIBRARY_STORAGE_KEY = "myTeleprompterLibrary";
-
-        // Retrieve previously saved scripts
-        function getSavedScripts() {
-
-            try {
-                const savedData =
-                    localStorage.getItem(LIBRARY_STORAGE_KEY);
-
-                return savedData ? JSON.parse(savedData) : {};
-
-            } catch (error) {
-
-                console.error("Unable to read script library:", error);
-
-                return {};
-            }
-        }
-
-        // Save a script to the library
-        saveScriptButton.addEventListener("click", function () {
-
-            const scriptName = scriptNameInput.value.trim();
-
-            const scriptText = scriptInput.value.trim();
-
-            if (scriptName === "") {
-                alert("Please enter a name for your script.");
-                return;
-            }
-
-            if (scriptText === "") {
-                alert("Please enter your script before saving.");
-                return;
-            }
-
-            const scripts = getSavedScripts();
-
-            // Ask before replacing an existing script
-            if (Object.prototype.hasOwnProperty.call(scripts, scriptName)) {
-
-                const replaceScript = confirm(
-                    "A script with this name already exists. Replace it?"
-                );
-
-                if (!replaceScript) {
-                    return;
-                }
-            }
-
-            // Store the script under its name
-            scripts[scriptName] = scriptText;
-
-            try {
-
-                localStorage.setItem(
-                    LIBRARY_STORAGE_KEY,
-                    JSON.stringify(scripts)
-                );
-
-                alert("Script saved successfully!");
-
-                scriptNameInput.value = "";
-
-                displaySavedScripts();
-
-            } catch (error) {
-
-                alert("Unable to save the script. Please check browser storage.");
-
-                console.error(error);
-            }
-        });
-
-        // Display saved script names
-        function displaySavedScripts() {
-
-            const scripts = getSavedScripts();
-
-            savedScriptsContainer.replaceChildren();
-
-            const scriptNames = Object.keys(scripts);
-
-            if (scriptNames.length === 0) {
-
-                const message = document.createElement("p");
-
-                message.textContent = "No saved scripts yet.";
-
-                savedScriptsContainer.appendChild(message);
-
-                return;
-            }
-
-            scriptNames.forEach(function (name) {
-
-                const row = document.createElement("div");
-
-                row.style.padding = "12px";
-                row.style.marginBottom = "10px";
-                row.style.backgroundColor = "#101010";
-                row.style.borderRadius = "8px";
-
-                const title = document.createElement("p");
-
-                title.textContent = name;
-                title.style.color = "white";
-
-                const loadButton = document.createElement("button");
-
-                loadButton.textContent = "Load";
-                loadButton.style.padding = "10px 20px";
-                loadButton.style.cursor = "pointer";
-
-                loadButton.addEventListener("click", function () {
-
-                    // Restore selected script to the editor
-                    scriptInput.value = scripts[name];
-
-                    // Keep automatic draft storage in sync
-                    localStorage.setItem(
-                        STORAGE_KEY,
-                        scriptInput.value
-                    );
-
-                    // Load it into the teleprompter
-                    loadScriptButton.click();
-
-                    scriptNameInput.value = name;
-                });
-
-                // ========================================
-                // STEP 29 - DELETE SAVED SCRIPT
-                // ========================================
-
-                const deleteButton = document.createElement("button");
-
-                deleteButton.textContent = "Delete";
-
-                deleteButton.style.padding = "10px 20px";
-                deleteButton.style.marginLeft = "10px";
-                deleteButton.style.backgroundColor = "#dc3545";
-                deleteButton.style.color = "white";
-                deleteButton.style.border = "none";
-                deleteButton.style.borderRadius = "6px";
-                deleteButton.style.cursor = "pointer";
-
-                deleteButton.addEventListener("click", function () {
-
-                    const confirmDelete = confirm(
-                        "Are you sure you want to delete '" + name + "'?"
-                    );
-
-                    if (!confirmDelete) {
                         return;
                     }
 
-                    const updatedScripts = getSavedScripts();
+                    teleprompter.scrollTop = scrollPosition;
 
-                    delete updatedScripts[name];
+                    updateReadingProgress();
 
-                    try {
+                }
 
-                        localStorage.setItem(
-                            LIBRARY_STORAGE_KEY,
-                            JSON.stringify(updatedScripts)
-                        );
+                lastFrameTime = timestamp;
 
-                        displaySavedScripts();
+                animationId = requestAnimationFrame(scrollText);
 
-                        alert("Script deleted successfully!");
+            }
 
-                    } catch (error) {
+            // ========================================
+            // STEP 48.4 - SCRIPT READING PROGRESS
+            // ========================================
 
-                        console.error("Unable to delete script:", error);
+            const readingProgressValue =
+                document.getElementById("readingProgressValue");
 
-                        alert("Unable to delete the script.");
+            function updateReadingProgress() {
+
+                // Calculate the total scrollable distance
+                const totalScrollableDistance =
+                    teleprompter.scrollHeight - teleprompter.clientHeight;
+
+                // Calculate reading progress
+                let progress = 0;
+
+                if (totalScrollableDistance > 0) {
+
+                    progress =
+                        (teleprompter.scrollTop / totalScrollableDistance) * 100;
+                }
+
+                // Keep the percentage between 0 and 100
+                progress = Math.max(0, Math.min(100, progress));
+
+                // Update the progress indicator
+                readingProgressValue.textContent =
+                    Math.round(progress) + "%";
+            }
+
+            // ========================================
+            // STEP 46.2 - COUNTDOWN TIMER
+            // ========================================
+
+            const countdownSelect =
+                document.getElementById("countdownSelect");
+
+            const countdownDisplay =
+                document.getElementById("countdownDisplay");
+
+            let countdownInterval = null;
+            let countdownActive = false;
+            let countdownGoTimeout = null;
+
+            let hasStartedScrolling = false;
+
+            const COUNTDOWN_STORAGE_KEY =
+                "myTeleprompterCountdown";
+
+            // Restore saved countdown preference
+            const savedCountdown =
+                localStorage.getItem(COUNTDOWN_STORAGE_KEY);
+
+            if (["0", "3", "5", "10"].includes(savedCountdown)) {
+                countdownSelect.value = savedCountdown;
+            }
+
+            // Save countdown preference when changed
+            countdownSelect.addEventListener("change", function () {
+                localStorage.setItem(
+                    COUNTDOWN_STORAGE_KEY,
+                    countdownSelect.value
+                );
+            });
+
+            // ========================================
+            // STEP 46.2 - CANCEL COUNTDOWN
+            // ========================================
+
+            function cancelCountdown() {
+
+                // Stop the countdown interval
+                if (countdownInterval !== null) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+
+                // Stop the GO! delay
+                if (countdownGoTimeout !== null) {
+                    clearTimeout(countdownGoTimeout);
+                    countdownGoTimeout = null;
+                }
+
+                // Reset countdown state
+                countdownActive = false;
+
+                // Hide the countdown display
+                countdownDisplay.hidden = true;
+                countdownDisplay.textContent = "";
+            }
+
+            // ========================================
+            // STEP 46.2 - RUN COUNTDOWN
+            // ========================================
+
+            function runCountdown(seconds, onComplete) {
+
+                cancelCountdown();
+
+                countdownActive = true;
+
+                let remaining = seconds;
+
+                countdownDisplay.hidden = false;
+                countdownDisplay.textContent = remaining;
+
+                countdownInterval = setInterval(function () {
+
+                    remaining--;
+
+                    if (remaining > 0) {
+
+                        countdownDisplay.textContent = remaining;
+
+                    } else {
+
+                        clearInterval(countdownInterval);
+                        countdownInterval = null;
+
+                        countdownDisplay.textContent = "GO!";
+
+                        countdownActive = false;
+
+                        countdownGoTimeout = setTimeout(function () {
+
+                            countdownGoTimeout = null;
+
+                            countdownDisplay.hidden = true;
+                            countdownDisplay.textContent = "";
+
+                            onComplete();
+
+                        }, 500);
                     }
+
+                }, 1000);
+            }
+
+            // ========================================
+            // STEP 46.2.9 - START WITH COUNTDOWN
+            // ========================================
+
+            startButton.addEventListener("click", function () {
+
+                // Prevent duplicate countdowns or scrolling
+                if (isScrolling || countdownActive) {
+                    return;
+                }
+
+                // Start the existing scrolling animation
+                function beginScrolling() {
+
+                    scrollPosition = teleprompter.scrollTop;
+
+                    isScrolling = true;
+
+                    // Remember that scrolling has started
+                    hasStartedScrolling = true;
+
+                    lastFrameTime = null;
+
+                    animationId = requestAnimationFrame(scrollText);
+                }
+
+                // Read the selected countdown duration
+                const seconds = Number(countdownSelect.value);
+
+                // Resume immediately if scrolling has started before
+                if (hasStartedScrolling) {
+
+                    beginScrolling();
+
+                } else if (seconds > 0) {
+
+                    // First start: run the selected countdown
+                    runCountdown(seconds, beginScrolling);
+
+                } else {
+
+                    // Countdown disabled: start immediately
+                    beginScrolling();
+                }
+
+            });
+
+
+            // PAUSE BUTTON
+
+            pauseButton.addEventListener("click", function () {
+
+                cancelCountdown();
+
+                isScrolling = false;
+
+                lastFrameTime = null;
+
+                if (animationId !== null) {
+
+                    cancelAnimationFrame(animationId);
+
+                    animationId = null;
+
+                }
+
+            });
+
+
+            // RESET BUTTON
+
+            resetButton.addEventListener("click", function () {
+
+                cancelCountdown();
+
+                hasStartedScrolling = false;
+
+                isScrolling = false;
+
+                lastFrameTime = null;
+
+                if (animationId !== null) {
+
+                    cancelAnimationFrame(animationId);
+
+                    animationId = null;
+
+                }
+
+                scrollPosition = 0;
+
+                teleprompter.scrollTop = 0;
+
+                updateReadingProgress();
+
+            });
+
+
+            // SPEED CONTROL
+
+            speedSlider.addEventListener("input", function () {
+
+                scrollSpeed = Number(speedSlider.value);
+
+                speedValue.textContent = scrollSpeed;
+
+            });
+
+
+            // KEEP POSITION IN SYNC WITH MANUAL SCROLLING
+
+            teleprompter.addEventListener("scroll", function () {
+
+                if (!isScrolling) {
+
+                    scrollPosition = teleprompter.scrollTop;
+
+                }
+
+            });
+
+            // CUSTOM SCRIPT EDITOR
+
+            const scriptInput =
+                document.getElementById("scriptInput");
+
+            const loadScriptButton =
+                document.getElementById("loadScriptButton");
+
+            const scriptContent =
+                document.querySelector(".script-content");
+
+            loadScriptButton.addEventListener("click", function () {
+
+                const newScript = scriptInput.value.trim();
+
+                if (newScript === "") {
+                    alert("Please enter your script first.");
+                    return;
+                }
+
+                // Stop scrolling
+                isScrolling = false;
+
+                lastFrameTime = null;
+
+                if (animationId !== null) {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+
+                // Clear previous script safely
+                scriptContent.replaceChildren();
+
+                // Preserve paragraph breaks
+                const paragraphs = newScript.split(/\n\s*\n/);
+
+                paragraphs.forEach(function (text) {
+
+                    const paragraph = document.createElement("p");
+
+                    paragraph.textContent = text;
+
+                    paragraph.style.whiteSpace = "pre-line";
+
+                    scriptContent.appendChild(paragraph);
 
                 });
 
-                row.appendChild(title);
-                row.appendChild(loadButton);
-                row.appendChild(deleteButton);
+                // Return to beginning
+                scrollPosition = 0;
 
-                savedScriptsContainer.appendChild(row);
+                teleprompter.scrollTop = 0;
+
             });
-        }
 
-        // Show saved scripts when the page opens
-        displaySavedScripts();
+            // ========================================
+            // STEP 27 - AUTOMATIC SCRIPT SAVING
+            // ========================================
 
-        // ========================================
-        // STEP 30 - ADJUSTABLE FONT SIZE
-        // ========================================
+            const STORAGE_KEY = "myTeleprompterScript";
 
-        const fontSlider =
-            document.getElementById("fontSlider");
+            // Save script whenever the user types
+            scriptInput.addEventListener("input", function () {
 
-        const fontValue =
-            document.getElementById("fontValue");
-
-        const FONT_STORAGE_KEY = "myTeleprompterFontSize";
-
-        // Restore previously selected font size
-        const savedFontSize =
-            localStorage.getItem(FONT_STORAGE_KEY);
-
-        if (savedFontSize !== null) {
-
-            const size = Number(savedFontSize);
-
-            if (size >= 18 && size <= 60) {
-                fontSlider.value = size;
-            }
-        }
-
-        // Apply font size
-        function updateFontSize() {
-
-            const fontSize = Number(fontSlider.value);
-
-            teleprompter.style.fontSize = fontSize + "px";
-
-            fontValue.textContent = fontSize;
-
-            localStorage.setItem(
-                FONT_STORAGE_KEY,
-                fontSize.toString()
-            );
-        }
-
-        // Update whenever the slider moves
-        fontSlider.addEventListener("input", updateFontSize);
-
-        // Apply the initial font size
-        updateFontSize();
-
-        // ========================================
-        // STEP 42.3 - ADJUSTABLE LINE SPACING
-        // ========================================
-
-        const lineSpacingSlider =
-            document.getElementById("lineSpacingSlider");
-
-        const lineSpacingValue =
-            document.getElementById("lineSpacingValue");
-
-        const LINE_SPACING_STORAGE_KEY =
-            "myTeleprompterLineSpacing";
-
-        // Restore previously saved line spacing
-        const savedLineSpacing =
-            localStorage.getItem(LINE_SPACING_STORAGE_KEY);
-
-        if (savedLineSpacing !== null) {
-
-            const spacing = Number(savedLineSpacing);
-
-            if (spacing >= 1 && spacing <= 2.5) {
-                lineSpacingSlider.value = spacing;
-            }
-        }
-
-        // Apply line spacing
-        function updateLineSpacing() {
-
-            const spacing = Number(lineSpacingSlider.value);
-
-            // Change the spacing between lines
-            teleprompter.style.lineHeight = spacing;
-
-            // Update displayed value
-            lineSpacingValue.textContent = spacing.toFixed(1);
-
-            // Remember the setting
-            localStorage.setItem(
-                LINE_SPACING_STORAGE_KEY,
-                spacing.toString()
-            );
-        }
-
-        // Update immediately when slider moves
-        lineSpacingSlider.addEventListener(
-            "input",
-            updateLineSpacing
-        );
-
-        // Apply saved setting when application opens
-        updateLineSpacing();
-
-        // ========================================
-        // STEP 31 - MIRROR MODE
-        // ========================================
-
-        const mirrorToggle =
-            document.getElementById("mirrorToggle");
-
-        const MIRROR_STORAGE_KEY = "myTeleprompterMirrorMode";
-
-        // Restore saved mirror setting
-        const savedMirrorMode =
-            localStorage.getItem(MIRROR_STORAGE_KEY);
-
-        if (savedMirrorMode === "true") {
-            mirrorToggle.checked = true;
-        }
-
-        // Apply mirror setting
-        function updateMirrorMode() {
-
-            const isMirrored = mirrorToggle.checked;
-
-            teleprompter.classList.toggle(
-                "mirrored",
-                isMirrored
-            );
-
-            localStorage.setItem(
-                MIRROR_STORAGE_KEY,
-                isMirrored.toString()
-            );
-        }
-
-        // Respond when switch changes
-        mirrorToggle.addEventListener(
-            "change",
-            updateMirrorMode
-        );
-
-        // Apply saved setting when page loads
-        updateMirrorMode();
-
-        // ========================================
-        // STEP 44.4 - READING GUIDE CONTROL
-        // ========================================
-
-        const readingGuideToggle =
-            document.getElementById("readingGuideToggle");
-
-        const readingGuide =
-            document.getElementById("readingGuide");
-
-        const READING_GUIDE_STORAGE_KEY =
-            "myTeleprompterReadingGuide";
-
-        // Restore previously saved preference
-        const savedReadingGuide =
-            localStorage.getItem(READING_GUIDE_STORAGE_KEY);
-
-        if (savedReadingGuide === "true") {
-            readingGuideToggle.checked = true;
-        }
-
-        // Show or hide the reading guide
-        function updateReadingGuide() {
-
-            const isEnabled = readingGuideToggle.checked;
-
-            readingGuide.hidden = !isEnabled;
-
-            localStorage.setItem(
-                READING_GUIDE_STORAGE_KEY,
-                isEnabled.toString()
-            );
-        }
-
-        // Respond when the checkbox changes
-        readingGuideToggle.addEventListener(
-            "change",
-            updateReadingGuide
-        );
-
-        // Apply saved preference when the app opens
-        updateReadingGuide();
-
-        // ========================================
-        // STEP 47.5 - ADJUSTABLE READING GUIDE
-        // ========================================
-
-        const readingGuidePositionSlider =
-            document.getElementById("readingGuidePositionSlider");
-
-        const readingGuidePositionValue =
-            document.getElementById("readingGuidePositionValue");
-
-        const READING_GUIDE_POSITION_KEY =
-            "myTeleprompterReadingGuidePosition";
-
-        // Restore saved position
-        const savedGuidePosition =
-            localStorage.getItem(READING_GUIDE_POSITION_KEY);
-
-        if (savedGuidePosition !== null) {
-
-            const position = Number(savedGuidePosition);
-
-            if (Number.isFinite(position) &&
-                position >= 15 &&
-                position <= 75) {
-
-                readingGuidePositionSlider.value = position;
-            }
-        }
-
-        // Update the guide position
-        function updateReadingGuidePosition() {
-
-            const position = readingGuidePositionSlider.value;
-
-            // Update percentage display
-            readingGuidePositionValue.textContent = position + "%";
-
-            // Move the blue reading guide
-            readingGuide.style.setProperty(
-                "--reading-guide-position",
-                position + "%"
-            );
-
-            // Save the preferred position
-            localStorage.setItem(
-                READING_GUIDE_POSITION_KEY,
-                position
-            );
-        }
-
-        // Update immediately when the slider moves
-        readingGuidePositionSlider.addEventListener(
-            "input",
-            updateReadingGuidePosition
-        );
-
-        // Apply saved position when the app opens
-        updateReadingGuidePosition();
-
-        // ========================================
-        // STEP 41.4 - IMPROVED FULL-SCREEN MODE
-        // ========================================
-
-        const fullscreenButton = document.getElementById("fullscreenButton");
-        const exitFullscreenButton = document.getElementById("exitFullscreenButton");
-        let exitButtonTimer = null;
-
-        // ========================================
-        // STEP 43 - KEEP SCREEN AWAKE
-        // ========================================
-
-        let wakeLock = null;
-
-        // Request permission to keep the screen awake
-        async function requestWakeLock() {
-
-            if (!("wakeLock" in navigator)) {
-                console.log("Screen Wake Lock is not supported.");
-                return;
-            }
-
-            try {
-
-                wakeLock = await navigator.wakeLock.request("screen");
-
-                console.log("Screen Wake Lock activated.");
-
-            } catch (error) {
-
-                console.log(
-                    "Unable to activate Screen Wake Lock:",
-                    error
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    scriptInput.value
                 );
 
-            }
-        }
+            });
 
-        // Release the screen wake lock
-        async function releaseWakeLock() {
+            // Restore saved script when application opens
+            window.addEventListener("DOMContentLoaded", function () {
 
-            if (wakeLock !== null) {
+                const savedScript = localStorage.getItem(STORAGE_KEY);
+
+                if (savedScript !== null) {
+
+                    scriptInput.value = savedScript;
+
+                    // Automatically load the saved script
+                    if (savedScript.trim() !== "") {
+                        loadScriptButton.click();
+                    }
+
+                }
+
+            });
+
+            // ========================================
+            // STEP 28.4 - SCRIPT LIBRARY
+            // ========================================
+
+            // Get our library controls
+            const scriptNameInput =
+                document.getElementById("scriptName");
+
+            const saveScriptButton =
+                document.getElementById("saveScriptButton");
+
+            const savedScriptsContainer =
+                document.getElementById("savedScripts");
+
+            // Separate storage key for our script library
+            const LIBRARY_STORAGE_KEY = "myTeleprompterLibrary";
+
+            // Retrieve previously saved scripts
+            function getSavedScripts() {
 
                 try {
+                    const savedData =
+                        localStorage.getItem(LIBRARY_STORAGE_KEY);
 
-                    await wakeLock.release();
-
-                    console.log("Screen Wake Lock released.");
+                    return savedData ? JSON.parse(savedData) : {};
 
                 } catch (error) {
 
-                    console.log("Unable to release Wake Lock:", error);
+                    console.error("Unable to read script library:", error);
 
+                    return {};
+                }
+            }
+
+            // Save a script to the library
+            saveScriptButton.addEventListener("click", function () {
+
+                const scriptName = scriptNameInput.value.trim();
+
+                const scriptText = scriptInput.value.trim();
+
+                if (scriptName === "") {
+                    alert("Please enter a name for your script.");
+                    return;
                 }
 
-                wakeLock = null;
+                if (scriptText === "") {
+                    alert("Please enter your script before saving.");
+                    return;
+                }
+
+                const scripts = getSavedScripts();
+
+                // Ask before replacing an existing script
+                if (Object.prototype.hasOwnProperty.call(scripts, scriptName)) {
+
+                    const replaceScript = confirm(
+                        "A script with this name already exists. Replace it?"
+                    );
+
+                    if (!replaceScript) {
+                        return;
+                    }
+                }
+
+                // Store the script under its name
+                scripts[scriptName] = scriptText;
+
+                try {
+
+                    localStorage.setItem(
+                        LIBRARY_STORAGE_KEY,
+                        JSON.stringify(scripts)
+                    );
+
+                    alert("Script saved successfully!");
+
+                    scriptNameInput.value = "";
+
+                    displaySavedScripts();
+
+                } catch (error) {
+
+                    alert("Unable to save the script. Please check browser storage.");
+
+                    console.error(error);
+                }
+            });
+
+            // Display saved script names
+            function displaySavedScripts() {
+
+                const scripts = getSavedScripts();
+
+                savedScriptsContainer.replaceChildren();
+
+                const scriptNames = Object.keys(scripts);
+
+                if (scriptNames.length === 0) {
+
+                    const message = document.createElement("p");
+
+                    message.textContent = "No saved scripts yet.";
+
+                    savedScriptsContainer.appendChild(message);
+
+                    return;
+                }
+
+                scriptNames.forEach(function (name) {
+
+                    const row = document.createElement("div");
+
+                    row.style.padding = "12px";
+                    row.style.marginBottom = "10px";
+                    row.style.backgroundColor = "#101010";
+                    row.style.borderRadius = "8px";
+
+                    const title = document.createElement("p");
+
+                    title.textContent = name;
+                    title.style.color = "white";
+
+                    const loadButton = document.createElement("button");
+
+                    loadButton.textContent = "Load";
+                    loadButton.style.padding = "10px 20px";
+                    loadButton.style.cursor = "pointer";
+
+                    loadButton.addEventListener("click", function () {
+
+                        // Restore selected script to the editor
+                        scriptInput.value = scripts[name];
+
+                        // Keep automatic draft storage in sync
+                        localStorage.setItem(
+                            STORAGE_KEY,
+                            scriptInput.value
+                        );
+
+                        // Load it into the teleprompter
+                        loadScriptButton.click();
+
+                        scriptNameInput.value = name;
+                    });
+
+                    // ========================================
+                    // STEP 29 - DELETE SAVED SCRIPT
+                    // ========================================
+
+                    const deleteButton = document.createElement("button");
+
+                    deleteButton.textContent = "Delete";
+
+                    deleteButton.style.padding = "10px 20px";
+                    deleteButton.style.marginLeft = "10px";
+                    deleteButton.style.backgroundColor = "#dc3545";
+                    deleteButton.style.color = "white";
+                    deleteButton.style.border = "none";
+                    deleteButton.style.borderRadius = "6px";
+                    deleteButton.style.cursor = "pointer";
+
+                    deleteButton.addEventListener("click", function () {
+
+                        const confirmDelete = confirm(
+                            "Are you sure you want to delete '" + name + "'?"
+                        );
+
+                        if (!confirmDelete) {
+                            return;
+                        }
+
+                        const updatedScripts = getSavedScripts();
+
+                        delete updatedScripts[name];
+
+                        try {
+
+                            localStorage.setItem(
+                                LIBRARY_STORAGE_KEY,
+                                JSON.stringify(updatedScripts)
+                            );
+
+                            displaySavedScripts();
+
+                            alert("Script deleted successfully!");
+
+                        } catch (error) {
+
+                            console.error("Unable to delete script:", error);
+
+                            alert("Unable to delete the script.");
+                        }
+
+                    });
+
+                    row.appendChild(title);
+                    row.appendChild(loadButton);
+                    row.appendChild(deleteButton);
+
+                    savedScriptsContainer.appendChild(row);
+                });
             }
-        }
 
-        // ========================================
-        // STEP 43.4 - RESTORE SCREEN WAKE LOCK
-        // ========================================
+            // Show saved scripts when the page opens
+            displaySavedScripts();
 
-        document.addEventListener("visibilitychange", function () {
+            // ========================================
+            // STEP 30 - ADJUSTABLE FONT SIZE
+            // ========================================
 
-            if (
-                document.visibilityState === "visible" &&
-                document.body.classList.contains("reading-mode") &&
-                (wakeLock === null || wakeLock.released)
-            ) {
-                requestWakeLock();
+            const fontSlider =
+                document.getElementById("fontSlider");
+
+            const fontValue =
+                document.getElementById("fontValue");
+
+            const FONT_STORAGE_KEY = "myTeleprompterFontSize";
+
+            // Restore previously selected font size
+            const savedFontSize =
+                localStorage.getItem(FONT_STORAGE_KEY);
+
+            if (savedFontSize !== null) {
+
+                const size = Number(savedFontSize);
+
+                if (size >= 18 && size <= 60) {
+                    fontSlider.value = size;
+                }
             }
 
-        });
+            // Apply font size
+            function updateFontSize() {
 
-        function showExitButton() {
-            if (!document.body.classList.contains("reading-mode")) return;
+                const fontSize = Number(fontSlider.value);
 
-            exitFullscreenButton.classList.remove("auto-hidden");
-            clearTimeout(exitButtonTimer);
-            exitButtonTimer = setTimeout(function () {
-                exitFullscreenButton.classList.add("auto-hidden");
-            }, 3000);
-        }
+                teleprompter.style.fontSize = fontSize + "px";
 
-        // ========================================
-        // STEP 43.2 - ACTIVATE WAKE LOCK
-        // ========================================
+                fontValue.textContent = fontSize;
 
-        // Enter reading mode
-        fullscreenButton.addEventListener("click", function () {
-
-            document.body.classList.add("reading-mode");
-
-            exitFullscreenButton.hidden = false;
-
-            showExitButton();
-
-            // Keep the screen awake while reading
-            requestWakeLock();
-
-        });
-
-        // ========================================
-        // STEP 43.3 - RELEASE SCREEN WAKE LOCK
-        // ========================================
-
-        function exitReadingMode() {
-
-            clearTimeout(exitButtonTimer);
-
-            document.body.classList.remove("reading-mode");
-
-            exitFullscreenButton.classList.remove("auto-hidden");
-
-            exitFullscreenButton.hidden = true;
-
-            // Allow the screen to sleep normally again
-            releaseWakeLock();
-        }
-
-        exitFullscreenButton.addEventListener("click", function (event) {
-            event.stopPropagation();
-            exitReadingMode();
-        });
-
-        // Tap anywhere in the reading area to reveal the exit button.
-        teleprompter.addEventListener("click", showExitButton);
-
-        document.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") exitReadingMode();
-        });
-
-        // ========================================
-        // STEP 40 - EXPORT SAVED SCRIPTS
-        // ========================================
-
-        const exportScriptsButton =
-            document.getElementById("exportScriptsButton");
-
-        exportScriptsButton.addEventListener("click", function () {
-
-            const scripts = getSavedScripts();
-
-            if (Object.keys(scripts).length === 0) {
-                alert("There are no saved scripts to export.");
-                return;
+                localStorage.setItem(
+                    FONT_STORAGE_KEY,
+                    fontSize.toString()
+                );
             }
 
-            const backup = {
-                app: "MyTeleprompter",
-                version: 1,
-                exportedAt: new Date().toISOString(),
-                scripts: scripts
-            };
+            // Update whenever the slider moves
+            fontSlider.addEventListener("input", updateFontSize);
 
-            const json = JSON.stringify(backup, null, 2);
+            // Apply the initial font size
+            updateFontSize();
 
-            const blob = new Blob(
-                [json],
-                { type: "application/json" }
+            // ========================================
+            // STEP 42.3 - ADJUSTABLE LINE SPACING
+            // ========================================
+
+            const lineSpacingSlider =
+                document.getElementById("lineSpacingSlider");
+
+            const lineSpacingValue =
+                document.getElementById("lineSpacingValue");
+
+            const LINE_SPACING_STORAGE_KEY =
+                "myTeleprompterLineSpacing";
+
+            // Restore previously saved line spacing
+            const savedLineSpacing =
+                localStorage.getItem(LINE_SPACING_STORAGE_KEY);
+
+            if (savedLineSpacing !== null) {
+
+                const spacing = Number(savedLineSpacing);
+
+                if (spacing >= 1 && spacing <= 2.5) {
+                    lineSpacingSlider.value = spacing;
+                }
+            }
+
+            // Apply line spacing
+            function updateLineSpacing() {
+
+                const spacing = Number(lineSpacingSlider.value);
+
+                // Change the spacing between lines
+                teleprompter.style.lineHeight = spacing;
+
+                // Update displayed value
+                lineSpacingValue.textContent = spacing.toFixed(1);
+
+                // Remember the setting
+                localStorage.setItem(
+                    LINE_SPACING_STORAGE_KEY,
+                    spacing.toString()
+                );
+            }
+
+            // Update immediately when slider moves
+            lineSpacingSlider.addEventListener(
+                "input",
+                updateLineSpacing
             );
 
-            const url = URL.createObjectURL(blob);
+            // Apply saved setting when application opens
+            updateLineSpacing();
 
-            const link = document.createElement("a");
+            // ========================================
+            // STEP 31 - MIRROR MODE
+            // ========================================
 
-            link.href = url;
-            link.download = "MyTeleprompter-Backup.json";
+            const mirrorToggle =
+                document.getElementById("mirrorToggle");
 
-            document.body.appendChild(link);
+            const MIRROR_STORAGE_KEY = "myTeleprompterMirrorMode";
 
-            link.click();
+            // Restore saved mirror setting
+            const savedMirrorMode =
+                localStorage.getItem(MIRROR_STORAGE_KEY);
 
-            document.body.removeChild(link);
-
-            setTimeout(function () {
-                URL.revokeObjectURL(url);
-            }, 1000);
-
-        });
-
-        // ========================================
-        // STEP 40.2 - IMPORT SAVED SCRIPTS
-        // ========================================
-
-        const importScriptsButton =
-            document.getElementById("importScriptsButton");
-
-        const importScriptsFile =
-            document.getElementById("importScriptsFile");
-
-        // Open the file picker
-        importScriptsButton.addEventListener("click", function () {
-            importScriptsFile.click();
-        });
-
-        // Import selected backup
-        importScriptsFile.addEventListener("change", async function () {
-
-            const file = importScriptsFile.files[0];
-
-            if (!file) {
-                return;
+            if (savedMirrorMode === "true") {
+                mirrorToggle.checked = true;
             }
 
-            try {
+            // Apply mirror setting
+            function updateMirrorMode() {
 
-                const fileContents = await file.text();
+                const isMirrored = mirrorToggle.checked;
 
-                const backup = JSON.parse(fileContents);
+                teleprompter.classList.toggle(
+                    "mirrored",
+                    isMirrored
+                );
 
-                // Validate the backup
-                if (
-                    backup.app !== "MyTeleprompter" ||
-                    backup.version !== 1 ||
-                    !backup.scripts ||
-                    typeof backup.scripts !== "object" ||
-                    Array.isArray(backup.scripts)
-                ) {
-                    throw new Error("Invalid MyTeleprompter backup.");
-                }
-
-                // Validate individual scripts
-                const importedScripts = Object.create(null);
-
-                for (const [name, content] of Object.entries(backup.scripts)) {
-
-                    if (
-                        typeof name !== "string" ||
-                        name.trim() === "" ||
-                        typeof content !== "string"
-                    ) {
-                        throw new Error("Backup contains an invalid script.");
-                    }
-
-                    Object.defineProperty(importedScripts, name, {
-                        value: content,
-                        enumerable: true,
-                        writable: true,
-                        configurable: true
-                    });
-                }
-
-                const existingScripts = getSavedScripts();
-
-                // Preserve existing scripts unless user approves replacement
-                let importedCount = 0;
-                let skippedCount = 0;
-
-                for (const [name, content] of Object.entries(importedScripts)) {
-
-                    if (Object.prototype.hasOwnProperty.call(existingScripts, name)) {
-
-                        const replace = confirm(
-                            "A script named '" + name +
-                            "' already exists. Replace it?"
-                        );
-
-                        if (!replace) {
-                            skippedCount++;
-                            continue;
-                        }
-                    }
-
-                    Object.defineProperty(existingScripts, name, {
-                        value: content,
-                        enumerable: true,
-                        writable: true,
-                        configurable: true
-                    });
-
-                    importedCount++;
-                }
-
-                // Save updated script library
                 localStorage.setItem(
-                    LIBRARY_STORAGE_KEY,
-                    JSON.stringify(existingScripts)
+                    MIRROR_STORAGE_KEY,
+                    isMirrored.toString()
                 );
-
-                // Refresh the displayed library
-                displaySavedScripts();
-
-                alert(
-                    "Import complete!\n\n" +
-                    "Imported: " + importedCount + "\n" +
-                    "Skipped: " + skippedCount
-                );
-
-            } catch (error) {
-
-                console.error("Script import failed:", error);
-
-                alert(
-                    "Unable to import this backup. " +
-                    "Please select a valid MyTeleprompter backup file."
-                );
-
-            } finally {
-
-                // Allow the same file to be selected again
-                importScriptsFile.value = "";
-
             }
 
-        });
+            // Respond when switch changes
+            mirrorToggle.addEventListener(
+                "change",
+                updateMirrorMode
+            );
 
-    </script>
+            // Apply saved setting when page loads
+            updateMirrorMode();
 
-    <!-- ========================================
-     STEP 35 - SERVICE WORKER REGISTRATION
-     ======================================== -->
+            // ========================================
+            // STEP 44.4 - READING GUIDE CONTROL
+            // ========================================
 
-    <script>
-        if ("serviceWorker" in navigator) {
+            const readingGuideToggle =
+                document.getElementById("readingGuideToggle");
 
-            window.addEventListener("load", function () {
+            const readingGuide =
+                document.getElementById("readingGuide");
 
-                navigator.serviceWorker.register("./service-worker.js")
-                    .then(function (registration) {
+            const READING_GUIDE_STORAGE_KEY =
+                "myTeleprompterReadingGuide";
 
-                        console.log(
-                            "Service Worker registered successfully:",
-                            registration.scope
-                        );
+            // Restore previously saved preference
+            const savedReadingGuide =
+                localStorage.getItem(READING_GUIDE_STORAGE_KEY);
 
-                    })
-                    .catch(function (error) {
+            if (savedReadingGuide === "true") {
+                readingGuideToggle.checked = true;
+            }
 
-                        console.error(
-                            "Service Worker registration failed:",
-                            error
-                        );
+            // Show or hide the reading guide
+            function updateReadingGuide() {
 
-                    });
+                const isEnabled = readingGuideToggle.checked;
+
+                readingGuide.hidden = !isEnabled;
+
+                localStorage.setItem(
+                    READING_GUIDE_STORAGE_KEY,
+                    isEnabled.toString()
+                );
+            }
+
+            // Respond when the checkbox changes
+            readingGuideToggle.addEventListener(
+                "change",
+                updateReadingGuide
+            );
+
+            // Apply saved preference when the app opens
+            updateReadingGuide();
+
+            // ========================================
+            // STEP 47.5 - ADJUSTABLE READING GUIDE
+            // ========================================
+
+            const readingGuidePositionSlider =
+                document.getElementById("readingGuidePositionSlider");
+
+            const readingGuidePositionValue =
+                document.getElementById("readingGuidePositionValue");
+
+            const READING_GUIDE_POSITION_KEY =
+                "myTeleprompterReadingGuidePosition";
+
+            // Restore saved position
+            const savedGuidePosition =
+                localStorage.getItem(READING_GUIDE_POSITION_KEY);
+
+            if (savedGuidePosition !== null) {
+
+                const position = Number(savedGuidePosition);
+
+                if (Number.isFinite(position) &&
+                    position >= 15 &&
+                    position <= 75) {
+
+                    readingGuidePositionSlider.value = position;
+                }
+            }
+
+            // Update the guide position
+            function updateReadingGuidePosition() {
+
+                const position = readingGuidePositionSlider.value;
+
+                // Update percentage display
+                readingGuidePositionValue.textContent = position + "%";
+
+                // Move the blue reading guide
+                readingGuide.style.setProperty(
+                    "--reading-guide-position",
+                    position + "%"
+                );
+
+                // Save the preferred position
+                localStorage.setItem(
+                    READING_GUIDE_POSITION_KEY,
+                    position
+                );
+            }
+
+            // Update immediately when the slider moves
+            readingGuidePositionSlider.addEventListener(
+                "input",
+                updateReadingGuidePosition
+            );
+
+            // Apply saved position when the app opens
+            updateReadingGuidePosition();
+
+            // ========================================
+            // STEP 41.4 - IMPROVED FULL-SCREEN MODE
+            // ========================================
+
+            const fullscreenButton = document.getElementById("fullscreenButton");
+            const exitFullscreenButton = document.getElementById("exitFullscreenButton");
+            let exitButtonTimer = null;
+            // STEP 49.8 - FULL-SCREEN PLAYBACK CONTROLS
+            const playbackControls = document.querySelector(".controls");
+
+            // ========================================
+            // STEP 43 - KEEP SCREEN AWAKE
+            // ========================================
+
+            let wakeLock = null;
+
+            // Request permission to keep the screen awake
+            async function requestWakeLock() {
+
+                if (!("wakeLock" in navigator)) {
+                    console.log("Screen Wake Lock is not supported.");
+                    return;
+                }
+
+                try {
+
+                    wakeLock = await navigator.wakeLock.request("screen");
+
+                    console.log("Screen Wake Lock activated.");
+
+                } catch (error) {
+
+                    console.log(
+                        "Unable to activate Screen Wake Lock:",
+                        error
+                    );
+
+                }
+            }
+
+            // Release the screen wake lock
+            async function releaseWakeLock() {
+
+                if (wakeLock !== null) {
+
+                    try {
+
+                        await wakeLock.release();
+
+                        console.log("Screen Wake Lock released.");
+
+                    } catch (error) {
+
+                        console.log("Unable to release Wake Lock:", error);
+
+                    }
+
+                    wakeLock = null;
+                }
+            }
+
+            // ========================================
+            // STEP 43.4 - RESTORE SCREEN WAKE LOCK
+            // ========================================
+
+            document.addEventListener("visibilitychange", function () {
+
+                if (
+                    document.visibilityState === "visible" &&
+                    document.body.classList.contains("reading-mode") &&
+                    (wakeLock === null || wakeLock.released)
+                ) {
+                    requestWakeLock();
+                }
 
             });
 
-        }
-    </script>
+            function showExitButton() {
+                if (!document.body.classList.contains("reading-mode")) return;
+
+                exitFullscreenButton.classList.remove("auto-hidden");
+                playbackControls.classList.remove("auto-hidden");
+                clearTimeout(exitButtonTimer);
+                exitButtonTimer = setTimeout(function () {
+                    exitFullscreenButton.classList.add("auto-hidden");
+                    playbackControls.classList.add("auto-hidden");
+                }, 3000);
+            }
+
+            // ========================================
+            // STEP 43.2 - ACTIVATE WAKE LOCK
+            // ========================================
+
+            // Enter reading mode
+            fullscreenButton.addEventListener("click", function () {
+
+                document.body.classList.add("reading-mode");
+
+                exitFullscreenButton.hidden = false;
+
+                showExitButton();
+
+                // Keep the screen awake while reading
+                requestWakeLock();
+
+            });
+
+            // ========================================
+            // STEP 43.3 - RELEASE SCREEN WAKE LOCK
+            // ========================================
+
+            function exitReadingMode() {
+
+                clearTimeout(exitButtonTimer);
+
+                document.body.classList.remove("reading-mode");
+
+                exitFullscreenButton.classList.remove("auto-hidden");
+
+                playbackControls.classList.remove("auto-hidden");
+
+                exitFullscreenButton.hidden = true;
+
+                // Allow the screen to sleep normally again
+                releaseWakeLock();
+            }
+
+            exitFullscreenButton.addEventListener("click", function (event) {
+                event.stopPropagation();
+                exitReadingMode();
+            });
+
+            // Tap anywhere in the reading area to reveal the exit button.
+            teleprompter.addEventListener("click", showExitButton);
+
+            document.addEventListener("keydown", function (event) {
+                if (event.key === "Escape") exitReadingMode();
+            });
+
+            // ========================================
+            // STEP 40 - EXPORT SAVED SCRIPTS
+            // ========================================
+
+            const exportScriptsButton =
+                document.getElementById("exportScriptsButton");
+
+            exportScriptsButton.addEventListener("click", function () {
+
+                const scripts = getSavedScripts();
+
+                if (Object.keys(scripts).length === 0) {
+                    alert("There are no saved scripts to export.");
+                    return;
+                }
+
+                const backup = {
+                    app: "MyTeleprompter",
+                    version: 1,
+                    exportedAt: new Date().toISOString(),
+                    scripts: scripts
+                };
+
+                const json = JSON.stringify(backup, null, 2);
+
+                const blob = new Blob(
+                    [json],
+                    { type: "application/json" }
+                );
+
+                const url = URL.createObjectURL(blob);
+
+                const link = document.createElement("a");
+
+                link.href = url;
+                link.download = "MyTeleprompter-Backup.json";
+
+                document.body.appendChild(link);
+
+                link.click();
+
+                document.body.removeChild(link);
+
+                setTimeout(function () {
+                    URL.revokeObjectURL(url);
+                }, 1000);
+
+            });
+
+            // ========================================
+            // STEP 40.2 - IMPORT SAVED SCRIPTS
+            // ========================================
+
+            const importScriptsButton =
+                document.getElementById("importScriptsButton");
+
+            const importScriptsFile =
+                document.getElementById("importScriptsFile");
+
+            // Open the file picker
+            importScriptsButton.addEventListener("click", function () {
+                importScriptsFile.click();
+            });
+
+            // Import selected backup
+            importScriptsFile.addEventListener("change", async function () {
+
+                const file = importScriptsFile.files[0];
+
+                if (!file) {
+                    return;
+                }
+
+                try {
+
+                    const fileContents = await file.text();
+
+                    const backup = JSON.parse(fileContents);
+
+                    // Validate the backup
+                    if (
+                        backup.app !== "MyTeleprompter" ||
+                        backup.version !== 1 ||
+                        !backup.scripts ||
+                        typeof backup.scripts !== "object" ||
+                        Array.isArray(backup.scripts)
+                    ) {
+                        throw new Error("Invalid MyTeleprompter backup.");
+                    }
+
+                    // Validate individual scripts
+                    const importedScripts = Object.create(null);
+
+                    for (const [name, content] of Object.entries(backup.scripts)) {
+
+                        if (
+                            typeof name !== "string" ||
+                            name.trim() === "" ||
+                            typeof content !== "string"
+                        ) {
+                            throw new Error("Backup contains an invalid script.");
+                        }
+
+                        Object.defineProperty(importedScripts, name, {
+                            value: content,
+                            enumerable: true,
+                            writable: true,
+                            configurable: true
+                        });
+                    }
+
+                    const existingScripts = getSavedScripts();
+
+                    // Preserve existing scripts unless user approves replacement
+                    let importedCount = 0;
+                    let skippedCount = 0;
+
+                    for (const [name, content] of Object.entries(importedScripts)) {
+
+                        if (Object.prototype.hasOwnProperty.call(existingScripts, name)) {
+
+                            const replace = confirm(
+                                "A script named '" + name +
+                                "' already exists. Replace it?"
+                            );
+
+                            if (!replace) {
+                                skippedCount++;
+                                continue;
+                            }
+                        }
+
+                        Object.defineProperty(existingScripts, name, {
+                            value: content,
+                            enumerable: true,
+                            writable: true,
+                            configurable: true
+                        });
+
+                        importedCount++;
+                    }
+
+                    // Save updated script library
+                    localStorage.setItem(
+                        LIBRARY_STORAGE_KEY,
+                        JSON.stringify(existingScripts)
+                    );
+
+                    // Refresh the displayed library
+                    displaySavedScripts();
+
+                    alert(
+                        "Import complete!\n\n" +
+                        "Imported: " + importedCount + "\n" +
+                        "Skipped: " + skippedCount
+                    );
+
+                } catch (error) {
+
+                    console.error("Script import failed:", error);
+
+                    alert(
+                        "Unable to import this backup. " +
+                        "Please select a valid MyTeleprompter backup file."
+                    );
+
+                } finally {
+
+                    // Allow the same file to be selected again
+                    importScriptsFile.value = "";
+
+                }
+
+            });
+
+        </script>
+
+        <!-- ========================================
+     STEP 35 - SERVICE WORKER REGISTRATION
+     ======================================== -->
+
+        <script>
+            if ("serviceWorker" in navigator) {
+
+                window.addEventListener("load", function () {
+
+                    navigator.serviceWorker.register("./service-worker.js")
+                        .then(function (registration) {
+
+                            console.log(
+                                "Service Worker registered successfully:",
+                                registration.scope
+                            );
+
+                        })
+                        .catch(function (error) {
+
+                            console.error(
+                                "Service Worker registration failed:",
+                                error
+                            );
+
+                        });
+
+                });
+
+            }
+        </script>
 
 </body>
 
