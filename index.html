@@ -80,7 +80,7 @@
         /* Reading guide appearance */
         .reading-guide {
             position: sticky;
-            top: 33%;
+            top: var(--reading-guide-position, 33%);
             left: 0;
             width: 100%;
             height: 2px;
@@ -92,6 +92,36 @@
             /* Keep the guide hidden when disabled */
             .reading-guide[hidden] {
                 display: none;
+            }
+
+        /* ========================================
+   STEP 47 - READING GUIDE POSITION SLIDER
+   ======================================== */
+
+        .reading-guide-position-control {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+            .reading-guide-position-control label {
+                display: block;
+                margin-bottom: 12px;
+                font-size: 17px;
+                font-weight: bold;
+            }
+
+            .reading-guide-position-control input[type="range"] {
+                display: block;
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto;
+                cursor: pointer;
+                accent-color: #00c8ff;
+                touch-action: manipulation;
             }
 
         /* ========================================
@@ -563,8 +593,8 @@
         </button>
 
         <!-- ========================================
-    STEP 44 - READING GUIDE
-    ======================================== -->
+        STEP 44 - READING GUIDE
+        ======================================== -->
 
         <div id="readingGuide"
              class="reading-guide"
@@ -573,8 +603,8 @@
         </div>
 
         <!-- ========================================
-    STEP 46.2 - COUNTDOWN DISPLAY
-    ======================================== -->
+        STEP 46.2 - COUNTDOWN DISPLAY
+        ======================================== -->
 
         <div id="countdownDisplay"
              class="countdown-display"
@@ -770,6 +800,26 @@
             📍 Reading Guide
 
         </label>
+
+    </div>
+
+    <!-- ========================================
+     STEP 47 - READING GUIDE POSITION
+     ======================================== -->
+
+    <div class="reading-guide-position-control">
+
+        <label for="readingGuidePositionSlider">
+            📏 Reading Guide Position:
+            <span id="readingGuidePositionValue">33%</span>
+        </label>
+
+        <input type="range"
+               id="readingGuidePositionSlider"
+               min="15"
+               max="75"
+               step="1"
+               value="33" />
 
     </div>
 
@@ -1556,6 +1606,65 @@
 
         // Apply saved preference when the app opens
         updateReadingGuide();
+
+        // ========================================
+        // STEP 47.5 - ADJUSTABLE READING GUIDE
+        // ========================================
+
+        const readingGuidePositionSlider =
+            document.getElementById("readingGuidePositionSlider");
+
+        const readingGuidePositionValue =
+            document.getElementById("readingGuidePositionValue");
+
+        const READING_GUIDE_POSITION_KEY =
+            "myTeleprompterReadingGuidePosition";
+
+        // Restore saved position
+        const savedGuidePosition =
+            localStorage.getItem(READING_GUIDE_POSITION_KEY);
+
+        if (savedGuidePosition !== null) {
+
+            const position = Number(savedGuidePosition);
+
+            if (Number.isFinite(position) &&
+                position >= 15 &&
+                position <= 75) {
+
+                readingGuidePositionSlider.value = position;
+            }
+        }
+
+        // Update the guide position
+        function updateReadingGuidePosition() {
+
+            const position = readingGuidePositionSlider.value;
+
+            // Update percentage display
+            readingGuidePositionValue.textContent = position + "%";
+
+            // Move the blue reading guide
+            readingGuide.style.setProperty(
+                "--reading-guide-position",
+                position + "%"
+            );
+
+            // Save the preferred position
+            localStorage.setItem(
+                READING_GUIDE_POSITION_KEY,
+                position
+            );
+        }
+
+        // Update immediately when the slider moves
+        readingGuidePositionSlider.addEventListener(
+            "input",
+            updateReadingGuidePosition
+        );
+
+        // Apply saved position when the app opens
+        updateReadingGuidePosition();
 
         // ========================================
         // STEP 41.4 - IMPROVED FULL-SCREEN MODE
