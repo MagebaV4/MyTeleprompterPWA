@@ -614,7 +614,7 @@
                 /* Full-screen exit button */
 
                 body.reading-mode #exitFullscreenButton {
-                    display: block;
+                    display: none;
                     position: fixed;
                     top: calc(15px + env(safe-area-inset-top));
                     right: 15px;
@@ -2271,13 +2271,20 @@
         });
 
         function showExitButton() {
+
             if (!document.body.classList.contains("reading-mode")) return;
 
-            exitFullscreenButton.classList.remove("auto-hidden");
+            // Show the playback controls
             playbackControls.classList.remove("auto-hidden");
+
+            // Keep the old red exit button hidden
+            exitFullscreenButton.hidden = true;
+
+            // Reset the auto-hide timer
             clearTimeout(exitButtonTimer);
+
+            // Hide playback controls after 3 seconds
             exitButtonTimer = setTimeout(function () {
-                exitFullscreenButton.classList.add("auto-hidden");
                 playbackControls.classList.add("auto-hidden");
             }, 3000);
         }
@@ -2289,11 +2296,18 @@
         // Enter reading mode
         fullscreenButton.addEventListener("click", function () {
 
+            if (document.body.classList.contains("reading-mode")) {
+                exitReadingMode();
+                return;
+            }
+
             document.body.classList.add("reading-mode");
 
-            exitFullscreenButton.hidden = false;
+            fullscreenButton.textContent = "✕ Exit Full Screen";
 
-            showExitButton();
+            // The purple Full Screen button now handles exiting Reading Mode.
+            // Keep the original red exit button hidden.
+            exitFullscreenButton.hidden = true;
 
             // Keep the screen awake while reading
             requestWakeLock();
@@ -2309,6 +2323,8 @@
             clearTimeout(exitButtonTimer);
 
             document.body.classList.remove("reading-mode");
+
+            fullscreenButton.textContent = "⛶ Full Screen";
 
             exitFullscreenButton.classList.remove("auto-hidden");
 
