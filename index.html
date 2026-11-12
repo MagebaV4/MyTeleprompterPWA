@@ -238,13 +238,13 @@
 
              /* BUTTON CONTROLS */
 
-             .controls {
-                 margin-top: 25px;
-                 display: flex;
-                 justify-content: center;
-                 gap: 15px;
-                 flex-wrap: wrap;
-             }
+        .controls {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
 
         /* STEP 49.6 - FULL-SCREEN CONTROLS */
 
@@ -257,8 +257,18 @@
             margin: 0;
             width: 95%;
             max-width: 600px;
-            gap: 8px;
+            gap: 4px;
+            flex-wrap: nowrap;
         }
+
+            /* STEP 50.8 - FIT FOUR BUTTONS ON IPHONE */
+            body.reading-mode .controls button {
+                flex: 1 1 0;
+                min-width: 0;
+                padding: 10px 3px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
 
             /* STEP 49.8 - AUTO-HIDE FULL-SCREEN CONTROLS */
 
@@ -267,18 +277,39 @@
                 pointer-events: none;
             }
 
-                .controls button {
-                    padding: 18px 32px;
-                    font-size: 22px;
-                    font-weight: bold;
-                    border: none;
-                    border-radius: 12px;
-                    cursor: pointer;
-                    color: white;
-                    min-height: 56px;
-                    min-width: 110px;
-                    touch-action: manipulation;
+        /* STEP 51.8 - RESPONSIVE READING CONTROLS */
+
+        @media (max-width: 480px) {
+            body:not(.reading-mode) .controls {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+                body:not(.reading-mode) .controls button {
+                    width: 100%;
+                    min-width: 0;
+                    box-sizing: border-box;
+                    padding: 12px 8px;
+                    font-size: 14px;
+                    white-space: nowrap;
                 }
+        }
+
+        .controls button {
+            padding: 10px 8px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            min-height: 48px;
+            min-width: 0;
+            touch-action: manipulation;
+        }
 
              #startButton {
                  background-color: #28a745;
@@ -367,26 +398,40 @@
              }
              /* SCRIPT EDITOR */
 
-             .script-editor {
-                 margin: 20px auto;
-                 max-width: 900px;
-             }
+        /* STEP 51.5 - MODERN SCRIPT EDITOR CARD */
+
+        .script-editor {
+            margin: 20px auto;
+            max-width: 900px;
+            padding: 28px;
+            background: linear-gradient(145deg, #1e293b, #111827);
+            border: 1px solid #334155;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            box-sizing: border-box;
+        }
 
                  .script-editor h2 {
                      color: #00c8ff;
                      font-size: 22px;
                  }
 
-             #scriptInput {
-                 width: 100%;
-                 padding: 15px;
-                 font-size: 18px;
-                 border-radius: 10px;
-                 border: 2px solid #333;
-                 background-color: #1c1c1c;
-                 color: white;
-                 resize: vertical;
-             }
+        /* STEP 51.5.4 - MODERN SCRIPT WRITING AREA */
+
+        #scriptInput {
+            width: 100%;
+            min-height: 220px;
+            padding: 18px;
+            font-size: 17px;
+            line-height: 1.7;
+            border-radius: 12px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: #f8fafc;
+            resize: vertical;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
 
              #loadScriptButton {
                  margin-top: 15px;
@@ -402,14 +447,18 @@
 
              /* SCRIPT LIBRARY */
 
-             .script-library {
-                 max-width: 900px;
-                 margin: 30px auto;
-                 padding: 20px;
-                 background-color: #1c1c1c;
-                 border: 1px solid #333;
-                 border-radius: 12px;
-             }
+        /* STEP 51.6 - MODERN SCRIPT LIBRARY */
+
+        .script-library {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 28px;
+            background: linear-gradient(145deg, #1e293b, #111827);
+            border: 1px solid #334155;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            box-sizing: border-box;
+        }
 
                  .script-library h2 {
                      color: #00c8ff;
@@ -438,9 +487,14 @@
                  cursor: pointer;
              }
 
-             #savedScripts {
-                 margin-top: 20px;
-             }
+        /* STEP 51.7 - SAVED SCRIPTS CONTAINER */
+
+        #savedScripts {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
                  #savedScripts p {
                      color: #aaa;
@@ -592,13 +646,202 @@
                      padding-bottom: calc(30px + env(safe-area-inset-bottom));
                  }
              }
+
+        /* ==========================================
+   STEP 51 - MY TELEPROMPTER APP HEADER
+   ========================================== */
+
+        .app-header {
+            max-width: 940px;
+            margin: 20px auto 30px;
+            padding: 28px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #1e293b, #111827);
+            border: 1px solid #334155;
+            border-radius: 18px;
+        }
+
+        .app-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .app-logo {
+            font-size: 36px;
+        }
+
+        .app-header h1 {
+            margin: 0;
+            font-size: 32px;
+            color: #00c8ff;
+            letter-spacing: 0.5px;
+        }
+
+        .app-subtitle {
+            margin: 12px 0 0;
+            font-size: 15px;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 480px) {
+            .app-header {
+                margin: 12px 10px 24px;
+                padding: 22px 12px;
+            }
+
+                .app-header h1 {
+                    font-size: 24px;
+                }
+
+            .app-logo {
+                font-size: 28px;
+            }
+
+            .app-subtitle {
+                font-size: 13px;
+            }
+        }
+
+        /* ==========================================
+   STEP 51.6 - SCRIPT LIBRARY BUTTON DESIGN
+   ========================================== */
+
+        .script-library #saveScriptButton,
+        .script-library #exportScriptsButton,
+        .script-library #importScriptsButton {
+            padding: 12px 18px;
+            margin: 6px 4px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            background-color: #2563eb;
+            border: 1px solid #3b82f6;
+            border-radius: 10px;
+            cursor: pointer;
+            min-height: 44px;
+            transition: background-color 0.2s ease;
+        }
+
+            .script-library #saveScriptButton:hover,
+            .script-library #exportScriptsButton:hover,
+            .script-library #importScriptsButton:hover {
+                background-color: #1d4ed8;
+            }
+
+        @media (max-width: 480px) {
+            .script-library #saveScriptButton,
+            .script-library #exportScriptsButton,
+            .script-library #importScriptsButton {
+                padding: 10px 12px;
+                font-size: 13px;
+                margin: 4px 2px;
+            }
+        }
+
+        /* ==========================================
+   STEP 51.7 - MODERN SAVED SCRIPT CARDS
+   ========================================== */
+
+        .saved-script-card {
+            padding: 20px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 1px solid #334155;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: border-color 0.2s ease;
+        }
+
+            .saved-script-card:hover {
+                border-color: #00c8ff;
+            }
+
+            .saved-script-card p {
+                color: #f8fafc;
+                font-size: 17px;
+                font-weight: 600;
+                margin: 0 0 15px;
+                overflow-wrap: anywhere;
+            }
+
+        @media (max-width: 480px) {
+            .saved-script-card {
+                padding: 16px;
+            }
+
+                .saved-script-card p {
+                    font-size: 15px;
+                }
+        }
+
+        /* ==========================================
+   STEP 51.7 - SAVED SCRIPT ACTION BUTTONS
+   ========================================== */
+
+        .saved-script-card .saved-script-load,
+        .saved-script-card .saved-script-delete {
+            padding: 12px 22px;
+            margin: 5px;
+            min-height: 44px;
+            min-width: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        /* LOAD BUTTON */
+        .saved-script-card .saved-script-load {
+            background-color: #2563eb;
+        }
+
+            .saved-script-card .saved-script-load:hover {
+                background-color: #1d4ed8;
+            }
+
+        /* DELETE BUTTON */
+        .saved-script-card .saved-script-delete {
+            background-color: #dc3545;
+        }
+
+            .saved-script-card .saved-script-delete:hover {
+                background-color: #b91c1c;
+            }
+
+        /* IPHONE FRIENDLY BUTTONS */
+        @media (max-width: 480px) {
+            .saved-script-card .saved-script-load,
+            .saved-script-card .saved-script-delete {
+                min-width: 90px;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
+
     </style>
 
 </head>
 
 <body>
 
-    <h1>My Teleprompter</h1>
+    <h1>
+        <!-- STEP 51 - MY TELEPROMPTER APP HEADER -->
+        <header class="app-header">
+            <div class="app-brand">
+                <span class="app-logo">🎬</span>
+                <h1>MyTeleprompter</h1>
+            </div>
+
+            <p class="app-subtitle">
+                Your personal reading studio
+            </p>
+        </header>
+    </h1>
 
     <!-- SCRIPT EDITOR -->
 
@@ -1462,10 +1705,10 @@
 
                     const row = document.createElement("div");
 
-                    row.style.padding = "12px";
-                    row.style.marginBottom = "10px";
-                    row.style.backgroundColor = "#101010";
-                    row.style.borderRadius = "8px";
+                    // STEP 51.7 - MODERN SAVED SCRIPT CARD
+                    row.classList.add("saved-script-card");
+
+                    
 
                     const title = document.createElement("p");
 
@@ -1474,9 +1717,11 @@
 
                     const loadButton = document.createElement("button");
 
+                    // STEP 51.7 - LOAD BUTTON DESIGN
+                    loadButton.classList.add("saved-script-load");
+
                     loadButton.textContent = "Load";
-                    loadButton.style.padding = "10px 20px";
-                    loadButton.style.cursor = "pointer";
+                    
 
                     loadButton.addEventListener("click", function () {
 
@@ -1501,15 +1746,12 @@
 
                     const deleteButton = document.createElement("button");
 
+                    // STEP 51.7 - DELETE BUTTON DESIGN
+                    deleteButton.classList.add("saved-script-delete");
+
                     deleteButton.textContent = "Delete";
 
-                    deleteButton.style.padding = "10px 20px";
-                    deleteButton.style.marginLeft = "10px";
-                    deleteButton.style.backgroundColor = "#dc3545";
-                    deleteButton.style.color = "white";
-                    deleteButton.style.border = "none";
-                    deleteButton.style.borderRadius = "6px";
-                    deleteButton.style.cursor = "pointer";
+                    
 
                     deleteButton.addEventListener("click", function () {
 
