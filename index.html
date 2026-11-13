@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -130,6 +130,38 @@
    ======================================== */
 
         .reading-progress {
+        }
+
+        /* STEP 55.4 - HIDE SCRIPT PROGRESS WHEN DISABLED */
+        #readingProgress[hidden] {
+            display: none !important;
+        }
+
+        /* STEP 55.5 - SCRIPT PROGRESS TOGGLE BUTTON */
+
+        #toggleReadingProgressButton {
+            display: block;
+            margin: 10px auto;
+            padding: 8px 12px;
+            background-color: #252525;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* Position toggle in Full-Screen Reading Mode */
+        body.reading-mode #toggleReadingProgressButton {
+            position: fixed;
+            top: calc(15px + env(safe-area-inset-top));
+            left: 15px;
+            z-index: 1300;
+            margin: 0;
+            padding: 8px 10px;
+            font-size: 12px;
+        }
+
             /* ========================================
    STEP 48.15 - TELEPROMPTER WRAPPER
    ======================================== */
@@ -1017,8 +1049,8 @@
     <div class="teleprompter-wrapper">
 
         <!-- ========================================
-        STEP 48 - SCRIPT READING PROGRESS
-        ======================================== -->
+    STEP 48 - SCRIPT READING PROGRESS
+    ======================================== -->
 
         <div id="readingProgress"
              class="reading-progress"
@@ -1028,6 +1060,14 @@
             <span id="readingProgressValue">0%</span>
 
         </div>
+
+        <!-- STEP 55.2 - SHOW/HIDE SCRIPT PROGRESS -->
+        <button id="toggleReadingProgressButton"
+                type="button"
+                aria-controls="readingProgress"
+                aria-pressed="false">
+            📊 Hide Progress
+        </button>
 
         <!-- TELEPROMPTER DISPLAY -->
         <!-- STEP 52.20 - CAMERA AND TELEPROMPTER CONTAINER -->
@@ -1051,8 +1091,8 @@
                 </button>
 
                 <!-- ========================================
-                STEP 44 - READING GUIDE
-                ======================================== -->
+            STEP 44 - READING GUIDE
+            ======================================== -->
 
                 <div id="readingGuide"
                      class="reading-guide"
@@ -1061,8 +1101,8 @@
                 </div>
 
                 <!-- ========================================
-                STEP 46.2 - COUNTDOWN DISPLAY
-                ======================================== -->
+            STEP 46.2 - COUNTDOWN DISPLAY
+            ======================================== -->
 
                 <div id="countdownDisplay"
                      class="countdown-display"
@@ -1072,8 +1112,8 @@
                 </div>
 
                 <!-- ========================================
-                STEP 48 - SCRIPT READING PROGRESS
-                ======================================== -->
+            STEP 48 - SCRIPT READING PROGRESS
+            ======================================== -->
 
 
 
@@ -2205,6 +2245,47 @@
         let exitButtonTimer = null;
         // STEP 49.8 - FULL-SCREEN PLAYBACK CONTROLS
         const playbackControls = document.querySelector(".controls");
+
+        // ==========================================
+        // STEP 55.3 - SHOW/HIDE SCRIPT PROGRESS
+        // ==========================================
+
+        const readingProgress = document.getElementById("readingProgress");
+
+        const toggleReadingProgressButton =
+            document.getElementById("toggleReadingProgressButton");
+
+        let isProgressVisible =
+            localStorage.getItem("myTeleprompterProgressVisible") !== "false";
+
+        function updateReadingProgressVisibility() {
+
+            readingProgress.hidden = !isProgressVisible;
+
+            toggleReadingProgressButton.textContent =
+                isProgressVisible
+                    ? "📊 Hide Progress"
+                    : "📊 Show Progress";
+
+            toggleReadingProgressButton.setAttribute(
+                "aria-pressed",
+                String(!isProgressVisible)
+            );
+        }
+
+        toggleReadingProgressButton.addEventListener("click", function () {
+
+            isProgressVisible = !isProgressVisible;
+
+            localStorage.setItem(
+                "myTeleprompterProgressVisible",
+                String(isProgressVisible)
+            );
+
+            updateReadingProgressVisibility();
+        });
+
+        updateReadingProgressVisibility();
 
         // ========================================
         // STEP 43 - KEEP SCREEN AWAKE
