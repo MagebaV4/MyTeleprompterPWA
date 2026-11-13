@@ -20,943 +20,1068 @@
 
     <style>
 
-             * {
-                 box-sizing: border-box;
-             }
+        * {
+            box-sizing: border-box;
+        }
 
-             body {
-                 margin: 0;
-                 padding: 20px;
-                 background-color: #101010;
-                 color: white;
-                 font-family: Arial, sans-serif;
-                 text-align: center;
-             }
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #101010;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
 
-             h1 {
-                 color: #00c8ff;
-                 font-size: 28px;
-                 margin-bottom: 25px;
-             }
+        h1 {
+            color: #00c8ff;
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
 
-             /* TELEPROMPTER READING AREA */
+        /* TELEPROMPTER READING AREA */
 
-             .teleprompter {
-                 position: relative;
-                 margin-top: 20px;
-                 padding: 25px;
-                 background-color: #000000;
-                 border: 2px solid #333333;
-                 border-radius: 12px;
-                 font-size: 30px;
-                 line-height: 1.6;
-                 height: 300px;
-                 overflow-y: auto;
-                 scroll-behavior: auto;
-                 text-align: center;
-                 scrollbar-width: none;
-             }
+        .teleprompter {
+            position: relative;
+            margin-top: 20px;
+            padding: 25px;
+            background-color: #000000;
+            border: 2px solid #333333;
+            border-radius: 12px;
+            font-size: 30px;
+            line-height: 1.6;
+            height: 300px;
+            overflow-y: auto;
+            scroll-behavior: auto;
+            text-align: center;
+            scrollbar-width: none;
+        }
 
-                 .teleprompter::-webkit-scrollbar {
-                     display: none;
-                 }
+            .teleprompter::-webkit-scrollbar {
+                display: none;
+            }
 
-             .script-content {
-                 padding-bottom: 250px;
-             }
+        .script-content {
+            padding-bottom: 250px;
+        }
 
-                 .script-content p {
-                     margin-bottom: 50px;
-                 }
+            .script-content p {
+                margin-bottom: 50px;
+            }
 
-             /* ========================================
+        /* ========================================
         STEP 44 - READING GUIDE
         ======================================== */
 
-             /* Anchor the guide to the reading area */
-             .teleprompter {
-                 position: relative;
-             }
+        /* Anchor the guide to the reading area */
+        .teleprompter {
+            position: relative;
+        }
 
-             /* Reading guide appearance */
-             .reading-guide {
-                 position: sticky;
-                 top: var(--reading-guide-position, 33%);
-                 left: 0;
-                 width: 100%;
-                 height: 2px;
-                 background-color: rgba(0, 200, 255, 0.7);
-                 z-index: 5;
-                 pointer-events: none;
-             }
+        /* Reading guide appearance */
+        .reading-guide {
+            position: sticky;
+            top: var(--reading-guide-position, 33%);
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: rgba(0, 200, 255, 0.7);
+            z-index: 5;
+            pointer-events: none;
+        }
 
-                 /* Keep the guide hidden when disabled */
-                 .reading-guide[hidden] {
-                     display: none;
-                 }
+            /* Keep the guide hidden when disabled */
+            .reading-guide[hidden] {
+                display: none;
+            }
 
-             /* ========================================
+        /* ========================================
         STEP 47 - READING GUIDE POSITION SLIDER
         ======================================== */
 
-             .reading-guide-position-control {
-                 margin-top: 20px;
-                 padding: 15px;
-                 background-color: #1a1a1a;
-                 border: 1px solid #333;
-                 border-radius: 12px;
-                 text-align: center;
-             }
+        .reading-guide-position-control {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            text-align: center;
+        }
 
-                 .reading-guide-position-control label {
-                     display: block;
-                     margin-bottom: 12px;
-                     font-size: 17px;
-                     font-weight: bold;
-                 }
+            .reading-guide-position-control label {
+                display: block;
+                margin-bottom: 12px;
+                font-size: 17px;
+                font-weight: bold;
+            }
 
-                 .reading-guide-position-control input[type="range"] {
-                     display: block;
-                     width: 100%;
-                     max-width: 400px;
-                     margin: 0 auto;
-                     cursor: pointer;
-                     accent-color: #00c8ff;
-                     touch-action: manipulation;
-                 }
+            .reading-guide-position-control input[type="range"] {
+                display: block;
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto;
+                cursor: pointer;
+                accent-color: #00c8ff;
+                touch-action: manipulation;
+            }
 
-             /* ========================================
+        /* ========================================
         STEP 48 - SCRIPT READING PROGRESS
         ======================================== */
 
-             .reading-progress {
-                 position: relative;
-                 z-index: 2000;
-                 width: fit-content;
-                 max-width: 90%;
-                 margin: 0 auto 10px;
-                 padding: 8px 16px;
-                 background-color: rgba(20, 20, 20, 0.9);
-                 border: 1px solid #333;
-                 border-radius: 20px;
-                 color: #ffffff;
-                 font-size: 14px;
-                 font-weight: 500;
-                 text-align: center;
-             }
+        .reading-progress {
+            position: relative;
+            z-index: 2000;
+            width: fit-content;
+            max-width: 90%;
+            margin: 0 auto 10px;
+            padding: 8px 16px;
+            background-color: rgba(20, 20, 20, 0.9);
+            border: 1px solid #333;
+            border-radius: 20px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+        }
 
-             /* STEP 55.4 - HIDE SCRIPT PROGRESS WHEN DISABLED */
-             #readingProgress[hidden] {
-                 display: none !important;
-             }
+        /* STEP 55.4 - HIDE SCRIPT PROGRESS WHEN DISABLED */
+        #readingProgress[hidden] {
+            display: none !important;
+        }
 
-             /* STEP 55.5 - SCRIPT PROGRESS TOGGLE BUTTON */
+        /* STEP 55.5 - SCRIPT PROGRESS TOGGLE BUTTON */
 
-             #toggleReadingProgressButton {
-                 display: block;
-                 margin: 10px auto;
-                 padding: 8px 12px;
-                 background-color: #252525;
-                 color: white;
-                 border: 1px solid #555;
-                 border-radius: 8px;
-                 font-size: 13px;
-                 cursor: pointer;
-             }
+        #toggleReadingProgressButton {
+            display: block;
+            margin: 10px auto;
+            padding: 8px 12px;
+            background-color: #252525;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+        }
 
-             /* Position toggle in Full-Screen Reading Mode */
-             /* STEP 56.10 - Keep progress toggle on main screen only */
-             body.reading-mode #toggleReadingProgressButton {
-                 display: none !important;
-             }
+        /* Position toggle in Full-Screen Reading Mode */
+        /* STEP 56.10 - Keep progress toggle on main screen only */
+        body.reading-mode #toggleReadingProgressButton {
+            display: none !important;
+        }
 
-                 /* STEP 56.3 - AUTO-HIDE PROGRESS TOGGLE */
-                 body.reading-mode #toggleReadingProgressButton.auto-hidden {
-                     opacity: 0;
-                     pointer-events: none;
-                 }
+            /* STEP 56.3 - AUTO-HIDE PROGRESS TOGGLE */
+            body.reading-mode #toggleReadingProgressButton.auto-hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
 
-             /* ========================================
+        /* ========================================
         STEP 48.15 - TELEPROMPTER WRAPPER
         ======================================== */
-             /* STEP 48.17 - TELEPROMPTER WRAPPER */
+        /* STEP 48.17 - TELEPROMPTER WRAPPER */
 
-             .teleprompter-wrapper {
-                 position: relative;
-                 width: 100%;
-                 max-width: 100%;
-                 margin: 20px auto 0;
-                 display: flow-root;
-             }
+        .teleprompter-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin: 20px auto 0;
+            display: flow-root;
+        }
 
 
-             /* ========================================
+        /* ========================================
         STEP 48.24 - FULL-SCREEN SCRIPT PROGRESS
         ======================================== */
 
-             /* STEP 56.12 - FULL-SCREEN SCRIPT PROGRESS */
-             /* STEP 56.33 - FULL-SCREEN SCRIPT PROGRESS */
+        /* STEP 56.12 - FULL-SCREEN SCRIPT PROGRESS */
+        /* STEP 56.33 - FULL-SCREEN SCRIPT PROGRESS */
 
-             body.reading-mode .reading-progress:not([hidden]) {
-                 display: block !important;
-                 position: fixed !important;
-                 top: calc(20px + env(safe-area-inset-top)) !important;
-                 left: 50% !important;
-                 transform: translateX(-50%) !important;
-                 z-index: 9999 !important;
-                 margin: 0 !important;
-             }
+        body.reading-mode .reading-progress:not([hidden]) {
+            display: block !important;
+            position: fixed !important;
+            top: calc(20px + env(safe-area-inset-top)) !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            z-index: 9999 !important;
+            margin: 0 !important;
+        }
 
-             #readingProgressValue {
-                 color: #00c8ff;
-                 font-weight: bold;
-             }
+        #readingProgressValue {
+            color: #00c8ff;
+            font-weight: bold;
+        }
 
-             /* ========================================
+        /* ========================================
         STEP 46.2 - COUNTDOWN DISPLAY
         ======================================== */
 
-             .countdown-display {
-                 position: sticky;
-                 top: 50%;
-                 left: 0;
-                 width: 100%;
-                 height: 0;
-                 display: flex;
-                 justify-content: center;
-                 align-items: center;
-                 font-size: clamp(80px, 20vw, 150px);
-                 font-weight: bold;
-                 color: #00c8ff;
-                 text-shadow: 0 0 25px rgba(0, 200, 255, 0.7);
-                 z-index: 20;
-                 pointer-events: none;
-             }
+        .countdown-display {
+            position: sticky;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(80px, 20vw, 150px);
+            font-weight: bold;
+            color: #00c8ff;
+            text-shadow: 0 0 25px rgba(0, 200, 255, 0.7);
+            z-index: 20;
+            pointer-events: none;
+        }
 
-                 .countdown-display[hidden] {
-                     display: none;
-                 }
+            .countdown-display[hidden] {
+                display: none;
+            }
 
-             /* ========================================
+        /* ========================================
         STEP 46.2 - COUNTDOWN CONTROL
         ======================================== */
 
-             .countdown-control {
-                 margin-top: 20px;
-                 display: flex;
-                 justify-content: center;
-                 align-items: center;
-                 flex-wrap: wrap;
-                 gap: 12px;
-             }
+        .countdown-control {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
 
-                 .countdown-control label {
-                     font-size: 18px;
-                     font-weight: bold;
-                 }
+            .countdown-control label {
+                font-size: 18px;
+                font-weight: bold;
+            }
 
-                 .countdown-control select {
-                     padding: 12px 16px;
-                     font-size: 17px;
-                     border: 2px solid #444;
-                     border-radius: 10px;
-                     background-color: #222;
-                     color: white;
-                     min-height: 48px;
-                     cursor: pointer;
-                     touch-action: manipulation;
-                 }
+            .countdown-control select {
+                padding: 12px 16px;
+                font-size: 17px;
+                border: 2px solid #444;
+                border-radius: 10px;
+                background-color: #222;
+                color: white;
+                min-height: 48px;
+                cursor: pointer;
+                touch-action: manipulation;
+            }
 
-                     .countdown-control select:focus {
-                         outline: 2px solid #00c8ff;
-                         outline-offset: 2px;
-                     }
+                .countdown-control select:focus {
+                    outline: 2px solid #00c8ff;
+                    outline-offset: 2px;
+                }
 
-             /* BUTTON CONTROLS */
+        /* BUTTON CONTROLS */
 
-             .controls {
-                 margin-top: 25px;
-                 display: flex;
-                 justify-content: center;
-                 gap: 5px;
-                 flex-wrap: wrap;
-             }
+        .controls {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
 
-             /* STEP 49.6 - FULL-SCREEN CONTROLS */
+        /* STEP 49.6 - FULL-SCREEN CONTROLS */
 
-             body.reading-mode .controls {
-                 position: fixed;
-                 bottom: 15px;
-                 left: 50%;
-                 transform: translateX(-50%);
-                 z-index: 1200;
-                 margin: 0;
-                 width: 95%;
-                 max-width: 600px;
-                 gap: 4px;
-                 flex-wrap: nowrap;
-             }
+        body.reading-mode .controls {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1200;
+            margin: 0;
+            width: 95%;
+            max-width: 600px;
+            gap: 4px;
+            flex-wrap: nowrap;
+        }
 
-                 /* STEP 50.8 - FIT FOUR BUTTONS ON IPHONE */
-                 body.reading-mode .controls button {
-                     flex: 1 1 0;
-                     min-width: 0;
-                     box-sizing: border-box;
-                     padding: 10px 2px;
-                     font-size: clamp(9px, 2.5vw, 12px);
-                     white-space: normal;
-                     overflow-wrap: normal;
-                     line-height: 1.2;
-                 }
+            /* STEP 50.8 - FIT FOUR BUTTONS ON IPHONE */
+            body.reading-mode .controls button {
+                flex: 1 1 0;
+                min-width: 0;
+                box-sizing: border-box;
+                padding: 10px 2px;
+                font-size: clamp(9px, 2.5vw, 12px);
+                white-space: normal;
+                overflow-wrap: normal;
+                line-height: 1.2;
+            }
 
-                 /* STEP 49.8 - AUTO-HIDE FULL-SCREEN CONTROLS */
+            /* STEP 49.8 - AUTO-HIDE FULL-SCREEN CONTROLS */
 
-                 body.reading-mode .controls.auto-hidden {
-                     opacity: 0;
-                     pointer-events: none;
-                 }
+            body.reading-mode .controls.auto-hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
 
-             /* STEP 51.8 - RESPONSIVE READING CONTROLS */
+        /* STEP 51.8 - RESPONSIVE READING CONTROLS */
 
-             @media (max-width: 480px) {
-                 body:not(.reading-mode) .controls {
-                     display: grid;
-                     grid-template-columns: repeat(2, minmax(0, 1fr));
-                     gap: 10px;
-                     width: 100%;
-                     box-sizing: border-box;
-                 }
+        @media (max-width: 480px) {
+            body:not(.reading-mode) .controls {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                width: 100%;
+                box-sizing: border-box;
+            }
 
-                     body:not(.reading-mode) .controls button {
-                         width: 100%;
-                         min-width: 0;
-                         box-sizing: border-box;
-                         padding: 12px 8px;
-                         font-size: 14px;
-                         white-space: nowrap;
-                     }
-             }
+                body:not(.reading-mode) .controls button {
+                    width: 100%;
+                    min-width: 0;
+                    box-sizing: border-box;
+                    padding: 12px 8px;
+                    font-size: 14px;
+                    white-space: nowrap;
+                }
+        }
 
-             .controls button {
-                 padding: 10px 8px;
-                 font-size: 14px;
-                 font-weight: bold;
-                 border: none;
-                 border-radius: 10px;
-                 cursor: pointer;
-                 color: white;
-                 min-height: 48px;
-                 min-width: 0;
-                 touch-action: manipulation;
-             }
+        .controls button {
+            padding: 10px 8px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            min-height: 48px;
+            min-width: 0;
+            touch-action: manipulation;
+        }
 
-             #startButton {
-                 background-color: #28a745;
-             }
+        #startButton {
+            background-color: #28a745;
+        }
 
-             #pauseButton {
-                 background-color: #ff9800;
-             }
+        #pauseButton {
+            background-color: #ff9800;
+        }
 
-             #resetButton {
-                 background-color: #dc3545;
-             }
+        #resetButton {
+            background-color: #dc3545;
+        }
 
-             .controls button:active {
-                 transform: scale(0.96);
-             }
+        .controls button:active {
+            transform: scale(0.96);
+        }
 
-             /* SPEED CONTROL */
+        /* SPEED CONTROL */
 
-             .speed-control {
-                 margin-top: 30px;
-             }
+        .speed-control {
+            margin-top: 30px;
+        }
 
-                 .speed-control label {
-                     font-size: 20px;
-                 }
+            .speed-control label {
+                font-size: 20px;
+            }
 
-             #speedSlider {
-                 width: 250px;
-                 max-width: 90%;
-                 margin-top: 15px;
-                 accent-color: #00c8ff;
-             }
+        #speedSlider {
+            width: 250px;
+            max-width: 90%;
+            margin-top: 15px;
+            accent-color: #00c8ff;
+        }
 
-             #speedValue {
-                 color: #00c8ff;
-                 font-weight: bold;
-             }
+        #speedValue {
+            color: #00c8ff;
+            font-weight: bold;
+        }
 
-             /* MOBILE SUPPORT */
+        /* MOBILE SUPPORT */
 
-             @media (max-width: 600px) {
+        @media (max-width: 600px) {
 
-                 body {
-                     padding: 10px;
-                 }
+            body {
+                padding: 10px;
+            }
 
-                 h1 {
-                     font-size: 24px;
-                 }
+            h1 {
+                font-size: 24px;
+            }
 
-                 .teleprompter {
-                     font-size: 24px;
-                     height: 350px;
-                     padding: 15px;
-                 }
+            .teleprompter {
+                font-size: 24px;
+                height: 350px;
+                padding: 15px;
+            }
 
-                 .controls button {
-                     font-size: 16px;
-                     padding: 12px 20px;
-                 }
+            .controls button {
+                font-size: 16px;
+                padding: 12px 20px;
+            }
 
-                 /* ========================================
+            /* ========================================
         STEP 46 - MOBILE PLAYBACK BUTTONS
         ======================================== */
 
-                 @media (max-width: 600px) {
+            @media (max-width: 600px) {
 
-                     .controls {
-                         display: flex;
-                         flex-wrap: nowrap;
-                         gap: 8px;
-                         width: 100%;
-                     }
+                .controls {
+                    display: flex;
+                    flex-wrap: nowrap;
+                    gap: 8px;
+                    width: 100%;
+                }
 
-                         .controls button {
-                             flex: 1 1 0;
-                             min-width: 0;
-                             min-height: 60px;
-                             padding: 14px 6px;
-                             font-size: 17px;
-                             border-radius: 12px;
-                             white-space: nowrap;
-                         }
-                 }
-             }
-             /* SCRIPT EDITOR */
+                    .controls button {
+                        flex: 1 1 0;
+                        min-width: 0;
+                        min-height: 60px;
+                        padding: 14px 6px;
+                        font-size: 17px;
+                        border-radius: 12px;
+                        white-space: nowrap;
+                    }
+            }
+        }
+        /* SCRIPT EDITOR */
 
-             /* STEP 51.5 - MODERN SCRIPT EDITOR CARD */
+        /* STEP 51.5 - MODERN SCRIPT EDITOR CARD */
 
-             .script-editor {
-                 margin: 20px auto;
-                 max-width: 900px;
-                 padding: 28px;
-                 background: linear-gradient(145deg, #1e293b, #111827);
-                 border: 1px solid #334155;
-                 border-radius: 18px;
-                 box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-                 box-sizing: border-box;
-             }
+        .script-editor {
+            margin: 20px auto;
+            max-width: 900px;
+            padding: 28px;
+            background: linear-gradient(145deg, #1e293b, #111827);
+            border: 1px solid #334155;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            box-sizing: border-box;
+        }
 
-                 .script-editor h2 {
-                     color: #00c8ff;
-                     font-size: 22px;
-                 }
+            .script-editor h2 {
+                color: #00c8ff;
+                font-size: 22px;
+            }
 
-             /* STEP 51.5.4 - MODERN SCRIPT WRITING AREA */
+        /* STEP 51.5.4 - MODERN SCRIPT WRITING AREA */
 
-             #scriptInput {
-                 width: 100%;
-                 min-height: 220px;
-                 padding: 18px;
-                 font-size: 17px;
-                 line-height: 1.7;
-                 border-radius: 12px;
-                 border: 1px solid #475569;
-                 background-color: #0f172a;
-                 color: #f8fafc;
-                 resize: vertical;
-                 box-sizing: border-box;
-                 font-family: inherit;
-             }
+        #scriptInput {
+            width: 100%;
+            min-height: 220px;
+            padding: 18px;
+            font-size: 17px;
+            line-height: 1.7;
+            border-radius: 12px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: #f8fafc;
+            resize: vertical;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
 
-             #loadScriptButton {
-                 margin-top: 15px;
-                 padding: 12px 25px;
-                 font-size: 18px;
-                 font-weight: bold;
-                 background-color: #007bff;
-                 color: white;
-                 border: none;
-                 border-radius: 10px;
-                 cursor: pointer;
-             }
+        #loadScriptButton {
+            margin-top: 15px;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
 
-             /* SCRIPT LIBRARY */
+        /* SCRIPT LIBRARY */
 
-             /* STEP 51.6 - MODERN SCRIPT LIBRARY */
+        /* STEP 51.6 - MODERN SCRIPT LIBRARY */
 
-             .script-library {
-                 max-width: 900px;
-                 margin: 30px auto;
-                 padding: 28px;
-                 background: linear-gradient(145deg, #1e293b, #111827);
-                 border: 1px solid #334155;
-                 border-radius: 18px;
-                 box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-                 box-sizing: border-box;
-             }
+        .script-library {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 28px;
+            background: linear-gradient(145deg, #1e293b, #111827);
+            border: 1px solid #334155;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            box-sizing: border-box;
+        }
 
-                 .script-library h2 {
-                     color: #00c8ff;
-                     font-size: 22px;
-                 }
+            .script-library h2 {
+                color: #00c8ff;
+                font-size: 22px;
+            }
 
-             #scriptName {
-                 width: 100%;
-                 padding: 12px;
-                 margin-bottom: 15px;
-                 font-size: 18px;
-                 color: white;
-                 background-color: #101010;
-                 border: 1px solid #555;
-                 border-radius: 8px;
-             }
+        #scriptName {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: white;
+            background-color: #101010;
+            border: 1px solid #555;
+            border-radius: 8px;
+        }
 
-             #saveScriptButton {
-                 padding: 12px 25px;
-                 font-size: 18px;
-                 font-weight: bold;
-                 color: white;
-                 background-color: #007bff;
-                 border: none;
-                 border-radius: 10px;
-                 cursor: pointer;
-             }
+        #saveScriptButton {
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
 
-             /* STEP 51.7 - SAVED SCRIPTS CONTAINER */
+        /* STEP 51.7 - SAVED SCRIPTS CONTAINER */
 
-             #savedScripts {
-                 margin-top: 24px;
-                 display: flex;
-                 flex-direction: column;
-                 gap: 12px;
-             }
+        #savedScripts {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
-                 #savedScripts p {
-                     color: #aaa;
-                 }
+            #savedScripts p {
+                color: #aaa;
+            }
 
-             /* FONT SIZE CONTROL */
+        /* FONT SIZE CONTROL */
 
-             .font-control {
-                 margin-top: 25px;
-                 margin-bottom: 30px;
-             }
+        .font-control {
+            margin-top: 25px;
+            margin-bottom: 30px;
+        }
 
-                 .font-control label {
-                     font-size: 20px;
-                 }
+            .font-control label {
+                font-size: 20px;
+            }
 
-             #fontSlider {
-                 width: 250px;
-                 max-width: 90%;
-                 margin-top: 15px;
-                 accent-color: #00c8ff;
-             }
+        #fontSlider {
+            width: 250px;
+            max-width: 90%;
+            margin-top: 15px;
+            accent-color: #00c8ff;
+        }
 
-             #fontValue {
-                 color: #00c8ff;
-                 font-weight: bold;
-             }
+        #fontValue {
+            color: #00c8ff;
+            font-weight: bold;
+        }
 
-             /* ========================================
+        /* ========================================
         STEP 42 - LINE SPACING CONTROL
         ======================================== */
 
-             .line-spacing-control {
-                 margin-top: 25px;
-                 margin-bottom: 30px;
-             }
+        .line-spacing-control {
+            margin-top: 25px;
+            margin-bottom: 30px;
+        }
 
-                 .line-spacing-control label {
-                     font-size: 20px;
-                 }
+            .line-spacing-control label {
+                font-size: 20px;
+            }
 
-             #lineSpacingSlider {
-                 width: 250px;
-                 max-width: 90%;
-                 margin-top: 15px;
-                 accent-color: #00c8ff;
-             }
+        #lineSpacingSlider {
+            width: 250px;
+            max-width: 90%;
+            margin-top: 15px;
+            accent-color: #00c8ff;
+        }
 
-             #lineSpacingValue {
-                 color: #00c8ff;
-                 font-weight: bold;
-             }
+        #lineSpacingValue {
+            color: #00c8ff;
+            font-weight: bold;
+        }
 
-             /* MIRROR MODE CONTROL */
+        /* MIRROR MODE CONTROL */
 
-             .mirror-control {
-                 margin: 25px auto;
-                 padding: 15px;
-                 max-width: 300px;
-                 background-color: #1c1c1c;
-                 border-radius: 10px;
-             }
+        .mirror-control {
+            margin: 25px auto;
+            padding: 15px;
+            max-width: 300px;
+            background-color: #1c1c1c;
+            border-radius: 10px;
+        }
 
-                 .mirror-control label {
-                     font-size: 20px;
-                     cursor: pointer;
-                 }
+            .mirror-control label {
+                font-size: 20px;
+                cursor: pointer;
+            }
 
-             #mirrorToggle {
-                 width: 22px;
-                 height: 22px;
-                 margin-right: 10px;
-                 accent-color: #00c8ff;
-                 vertical-align: middle;
-             }
+        #mirrorToggle {
+            width: 22px;
+            height: 22px;
+            margin-right: 10px;
+            accent-color: #00c8ff;
+            vertical-align: middle;
+        }
 
-             /* Reverse only the reading text */
+        /* Reverse only the reading text */
 
-             .teleprompter.mirrored .script-content {
-                 transform: scaleX(-1);
-             }
+        .teleprompter.mirrored .script-content {
+            transform: scaleX(-1);
+        }
 
-             /* ========================================
+        /* ========================================
              STEP 32 - FULL-SCREEN READING MODE
              ======================================== */
 
-             #fullscreenButton {
-                 background-color: #673ab7;
-             }
+        #fullscreenButton {
+            background-color: #673ab7;
+        }
 
-             #exitFullscreenButton {
-                 display: none;
-             }
+        #exitFullscreenButton {
+            display: none;
+        }
 
-             body.reading-mode {
-                 overflow: hidden;
-             }
+        body.reading-mode {
+            overflow: hidden;
+        }
 
-                 /* Expand the reading area across the screen */
+            /* Expand the reading area across the screen */
 
-                 body.reading-mode .teleprompter {
-                     position: fixed;
-                     inset: 0;
-                     z-index: 1000;
-                     width: 100%;
-                     height: 100dvh;
-                     margin: 0;
-                     padding: 65px 25px 30px;
-                     border: none;
-                     border-radius: 0;
-                     background-color: #000000;
-                 }
+            body.reading-mode .teleprompter {
+                position: fixed;
+                inset: 0;
+                z-index: 1000;
+                width: 100%;
+                height: 100dvh;
+                margin: 0;
+                padding: 65px 25px 30px;
+                border: none;
+                border-radius: 0;
+                background-color: #000000;
+            }
 
-                 /* Exit button stays visible */
+            /* Exit button stays visible */
 
-                 /* Full-screen exit button */
+            /* Full-screen exit button */
 
-                 body.reading-mode #exitFullscreenButton {
-                     display: none;
-                     position: fixed;
-                     top: calc(15px + env(safe-area-inset-top));
-                     right: 15px;
-                     z-index: 1001;
-                     margin: 0;
-                     padding: 10px 15px;
-                     background-color: rgba(220, 53, 69, 0.85);
-                     color: white;
-                     border: none;
-                     border-radius: 8px;
-                     font-size: 14px;
-                     cursor: pointer;
-                     opacity: 1;
-                     transition: opacity 0.3s ease;
-                 }
+            body.reading-mode #exitFullscreenButton {
+                display: none;
+                position: fixed;
+                top: calc(15px + env(safe-area-inset-top));
+                right: 15px;
+                z-index: 1001;
+                margin: 0;
+                padding: 10px 15px;
+                background-color: rgba(220, 53, 69, 0.85);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-size: 14px;
+                cursor: pointer;
+                opacity: 1;
+                transition: opacity 0.3s ease;
+            }
 
-                     /* Hide the button without removing it from the layout */
+                /* Hide the button without removing it from the layout */
 
-                     body.reading-mode #exitFullscreenButton.auto-hidden {
-                         opacity: 0;
-                         pointer-events: none;
-                     }
+                body.reading-mode #exitFullscreenButton.auto-hidden {
+                    opacity: 0;
+                    pointer-events: none;
+                }
 
-             /* Account for iPhone safe areas */
+        /* Account for iPhone safe areas */
 
-             @supports (padding: env(safe-area-inset-top)) {
+        @supports (padding: env(safe-area-inset-top)) {
 
-                 body.reading-mode .teleprompter {
-                     padding-top: calc(65px + env(safe-area-inset-top));
-                     padding-bottom: calc(30px + env(safe-area-inset-bottom));
-                 }
-             }
+            body.reading-mode .teleprompter {
+                padding-top: calc(65px + env(safe-area-inset-top));
+                padding-bottom: calc(30px + env(safe-area-inset-bottom));
+            }
+        }
 
-             /* ==========================================
+        /* ==========================================
         STEP 51 - MY TELEPROMPTER APP HEADER
         ========================================== */
 
-             .app-header {
-                 max-width: 940px;
-                 margin: 20px auto 30px;
-                 padding: 28px 20px;
-                 text-align: center;
-                 background: linear-gradient(135deg, #1e293b, #111827);
-                 border: 1px solid #334155;
-                 border-radius: 18px;
-             }
+        .app-header {
+            max-width: 940px;
+            margin: 20px auto 30px;
+            padding: 28px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #1e293b, #111827);
+            border: 1px solid #334155;
+            border-radius: 18px;
+        }
 
-             .app-brand {
-                 display: flex;
-                 align-items: center;
-                 justify-content: center;
-                 gap: 12px;
-             }
+        .app-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
 
-             .app-logo {
-                 font-size: 36px;
-             }
+        .app-logo {
+            font-size: 36px;
+        }
 
-             .app-header h1 {
-                 margin: 0;
-                 font-size: 32px;
-                 color: #00c8ff;
-                 letter-spacing: 0.5px;
-             }
+        .app-header h1 {
+            margin: 0;
+            font-size: 32px;
+            color: #00c8ff;
+            letter-spacing: 0.5px;
+        }
 
-             .app-subtitle {
-                 margin: 12px 0 0;
-                 font-size: 15px;
-                 color: #94a3b8;
-             }
+        .app-subtitle {
+            margin: 12px 0 0;
+            font-size: 15px;
+            color: #94a3b8;
+        }
 
-             @media (max-width: 480px) {
-                 .app-header {
-                     margin: 12px 10px 24px;
-                     padding: 22px 12px;
-                 }
+        @media (max-width: 480px) {
+            .app-header {
+                margin: 12px 10px 24px;
+                padding: 22px 12px;
+            }
 
-                     .app-header h1 {
-                         font-size: 24px;
-                     }
+                .app-header h1 {
+                    font-size: 24px;
+                }
 
-                 .app-logo {
-                     font-size: 28px;
-                 }
+            .app-logo {
+                font-size: 28px;
+            }
 
-                 .app-subtitle {
-                     font-size: 13px;
-                 }
-             }
+            .app-subtitle {
+                font-size: 13px;
+            }
+        }
 
-             /* ==========================================
+        /* ==========================================
         STEP 51.6 - SCRIPT LIBRARY BUTTON DESIGN
         ========================================== */
 
-             .script-library #saveScriptButton,
-             .script-library #exportScriptsButton,
-             .script-library #importScriptsButton {
-                 padding: 12px 18px;
-                 margin: 6px 4px;
-                 font-size: 14px;
-                 font-weight: 600;
-                 color: white;
-                 background-color: #2563eb;
-                 border: 1px solid #3b82f6;
-                 border-radius: 10px;
-                 cursor: pointer;
-                 min-height: 44px;
-                 transition: background-color 0.2s ease;
-             }
+        .script-library #saveScriptButton,
+        .script-library #exportScriptsButton,
+        .script-library #importScriptsButton {
+            padding: 12px 18px;
+            margin: 6px 4px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            background-color: #2563eb;
+            border: 1px solid #3b82f6;
+            border-radius: 10px;
+            cursor: pointer;
+            min-height: 44px;
+            transition: background-color 0.2s ease;
+        }
 
-                 .script-library #saveScriptButton:hover,
-                 .script-library #exportScriptsButton:hover,
-                 .script-library #importScriptsButton:hover {
-                     background-color: #1d4ed8;
-                 }
+            .script-library #saveScriptButton:hover,
+            .script-library #exportScriptsButton:hover,
+            .script-library #importScriptsButton:hover {
+                background-color: #1d4ed8;
+            }
 
-             @media (max-width: 480px) {
-                 .script-library #saveScriptButton,
-                 .script-library #exportScriptsButton,
-                 .script-library #importScriptsButton {
-                     padding: 10px 12px;
-                     font-size: 13px;
-                     margin: 4px 2px;
-                 }
-             }
+        @media (max-width: 480px) {
+            .script-library #saveScriptButton,
+            .script-library #exportScriptsButton,
+            .script-library #importScriptsButton {
+                padding: 10px 12px;
+                font-size: 13px;
+                margin: 4px 2px;
+            }
+        }
 
-             /* ==========================================
+        /* ==========================================
         STEP 51.7 - MODERN SAVED SCRIPT CARDS
         ========================================== */
 
-             .saved-script-card {
-                 padding: 20px;
-                 background: linear-gradient(135deg, #1e293b, #0f172a);
-                 border: 1px solid #334155;
-                 border-radius: 14px;
-                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-                 text-align: center;
-                 transition: border-color 0.2s ease;
-             }
+        .saved-script-card {
+            padding: 20px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 1px solid #334155;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: border-color 0.2s ease;
+        }
 
-                 .saved-script-card:hover {
-                     border-color: #00c8ff;
-                 }
+            .saved-script-card:hover {
+                border-color: #00c8ff;
+            }
 
-                 .saved-script-card p {
-                     color: #f8fafc;
-                     font-size: 17px;
-                     font-weight: 600;
-                     margin: 0 0 15px;
-                     overflow-wrap: anywhere;
-                 }
+            .saved-script-card p {
+                color: #f8fafc;
+                font-size: 17px;
+                font-weight: 600;
+                margin: 0 0 15px;
+                overflow-wrap: anywhere;
+            }
 
-             @media (max-width: 480px) {
-                 .saved-script-card {
-                     padding: 16px;
-                 }
+        @media (max-width: 480px) {
+            .saved-script-card {
+                padding: 16px;
+            }
 
-                     .saved-script-card p {
-                         font-size: 15px;
-                     }
-             }
+                .saved-script-card p {
+                    font-size: 15px;
+                }
+        }
 
-             /* ==========================================
+        /* ==========================================
         STEP 51.7 - SAVED SCRIPT ACTION BUTTONS
         ========================================== */
 
-             .saved-script-card .saved-script-load,
-             .saved-script-card .saved-script-delete {
-                 padding: 12px 22px;
-                 margin: 5px;
-                 min-height: 44px;
-                 min-width: 100px;
-                 font-size: 15px;
-                 font-weight: 600;
-                 color: white;
-                 border: none;
-                 border-radius: 10px;
-                 cursor: pointer;
-                 transition: background-color 0.2s ease;
-             }
+        .saved-script-card .saved-script-load,
+        .saved-script-card .saved-script-delete {
+            padding: 12px 22px;
+            margin: 5px;
+            min-height: 44px;
+            min-width: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
 
-             /* LOAD BUTTON */
-             .saved-script-card .saved-script-load {
-                 background-color: #2563eb;
-             }
+        /* LOAD BUTTON */
+        .saved-script-card .saved-script-load {
+            background-color: #2563eb;
+        }
 
-                 .saved-script-card .saved-script-load:hover {
-                     background-color: #1d4ed8;
-                 }
+            .saved-script-card .saved-script-load:hover {
+                background-color: #1d4ed8;
+            }
 
-             /* DELETE BUTTON */
-             .saved-script-card .saved-script-delete {
-                 background-color: #dc3545;
-             }
+        /* DELETE BUTTON */
+        .saved-script-card .saved-script-delete {
+            background-color: #dc3545;
+        }
 
-                 .saved-script-card .saved-script-delete:hover {
-                     background-color: #b91c1c;
-                 }
+            .saved-script-card .saved-script-delete:hover {
+                background-color: #b91c1c;
+            }
 
-             /* IPHONE FRIENDLY BUTTONS */
-             @media (max-width: 480px) {
-                 .saved-script-card .saved-script-load,
-                 .saved-script-card .saved-script-delete {
-                     min-width: 90px;
-                     padding: 12px 16px;
-                     font-size: 14px;
-                 }
-             }
+        /* IPHONE FRIENDLY BUTTONS */
+        @media (max-width: 480px) {
+            .saved-script-card .saved-script-load,
+            .saved-script-card .saved-script-delete {
+                min-width: 90px;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
 
-             /* STEP 52.5 - CAMERA MODE BUTTON STYLING */
+        /* STEP 52.5 - CAMERA MODE BUTTON STYLING */
 
-             .camera-mode-section {
-                 display: flex;
-                 justify-content: center;
-                 margin: 20px 0;
-                 padding: 0 12px;
-             }
+        .camera-mode-section {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 0 12px;
+        }
 
-             #cameraModeButton {
-                 width: 100%;
-                 max-width: 420px;
-                 padding: 15px 20px;
-                 border: none;
-                 border-radius: 12px;
-                 background: linear-gradient(135deg, #2563eb, #7c3aed);
-                 color: white;
-                 font-size: 16px;
-                 font-weight: 600;
-                 cursor: pointer;
-                 transition: transform 0.2s ease, opacity 0.2s ease;
-             }
+        #cameraModeButton {
+            width: 100%;
+            max-width: 420px;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
 
-                 #cameraModeButton:active {
-                     transform: scale(0.98);
-                 }
+            #cameraModeButton:active {
+                transform: scale(0.98);
+            }
 
-                 #cameraModeButton:hover {
-                     opacity: 0.92;
-                 }
+            #cameraModeButton:hover {
+                opacity: 0.92;
+            }
 
-             /* STEP 52.30 - VIDEO RECORDING BUTTON */
+        /* STEP 52.30 - VIDEO RECORDING BUTTON */
 
-             #recordVideoButton {
-                 width: 100%;
-                 max-width: 420px;
-                 padding: 15px 20px;
-                 border: none;
-                 border-radius: 12px;
-                 background: linear-gradient(135deg, #dc2626, #991b1b);
-                 color: white;
-                 font-size: 16px;
-                 font-weight: 600;
-                 cursor: pointer;
-                 transition: opacity 0.2s ease;
-             }
+        #recordVideoButton {
+            width: 100%;
+            max-width: 420px;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
 
-                 #recordVideoButton:disabled {
-                     opacity: 0.5;
-                     cursor: not-allowed;
-                 }
+            #recordVideoButton:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
 
-                 #recordVideoButton:not(:disabled):hover {
-                     opacity: 0.9;
-                 }
+            #recordVideoButton:not(:disabled):hover {
+                opacity: 0.9;
+            }
 
-             /* STEP 52.8 - CAMERA PREVIEW STYLING */
+        /* STEP 52.8 - CAMERA PREVIEW STYLING */
 
-             /* STEP 52.22 - FIXED CAMERA AND SCROLLING SCRIPT */
+        /* STEP 52.22 - FIXED CAMERA AND SCROLLING SCRIPT */
 
-             /* STEP 52.25 - CAMERA READING AREA HEIGHT */
+        /* STEP 52.25 - CAMERA READING AREA HEIGHT */
 
-             .camera-reading-container {
-                 position: relative;
-                 width: 100%;
-                 min-height: 500px;
-                 overflow: hidden;
-                 border-radius: 12px;
-             }
+        .camera-reading-container {
+            position: relative;
+            width: 100%;
+            min-height: 500px;
+            overflow: hidden;
+            border-radius: 12px;
+        }
 
-                 /* STEP 52.24 - CAMERA MODE READABILITY */
+            /* STEP 52.24 - CAMERA MODE READABILITY */
 
-                 /* STEP 52.26 - TALLER CAMERA READING AREA */
+            /* STEP 52.26 - TALLER CAMERA READING AREA */
 
-                 .camera-reading-container .teleprompter {
-                     position: relative;
-                     z-index: 1;
-                     height: 500px;
-                     background-color: rgba(0, 0, 0, 0.35);
-                 }
+            .camera-reading-container .teleprompter {
+                position: relative;
+                z-index: 1;
+                height: 500px;
+                background-color: rgba(0, 0, 0, 0.35);
+            }
 
-             #cameraPreview {
-                 position: absolute;
-                 inset: 0;
-                 width: 100%;
-                 height: 100%;
-                 object-fit: cover;
-                 transform: scaleX(-1);
-                 z-index: 0;
-             }
+        #cameraPreview {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+            z-index: 0;
+        }
 
-                 /* Keep the camera hidden until Camera Mode is activated */
-                 #cameraPreview[hidden] {
-                     display: none !important;
-                 }
+            /* Keep the camera hidden until Camera Mode is activated */
+            #cameraPreview[hidden] {
+                display: none !important;
+            }
+
+        /* STEP 60 — iPhone layout and touch improvements.
+           Normal mode only: keep full-screen reading controls unchanged. */
+        @media (max-width: 600px) {
+            body:not(.reading-mode) {
+                padding: 8px;
+            }
+
+                body:not(.reading-mode) .app-header {
+                    margin: 8px auto 14px;
+                    padding: 16px 12px;
+                }
+
+                    body:not(.reading-mode) .app-header h1 {
+                        font-size: clamp(21px, 5.8vw, 26px);
+                    }
+
+                body:not(.reading-mode) .app-subtitle {
+                    margin-top: 6px;
+                }
+
+                body:not(.reading-mode) .script-editor,
+                body:not(.reading-mode) .script-library {
+                    margin: 12px auto;
+                    padding: 16px 14px;
+                    border-radius: 14px;
+                }
+
+                    body:not(.reading-mode) .script-editor h2,
+                    body:not(.reading-mode) .script-library h2 {
+                        margin: 4px 0 14px;
+                    }
+
+                body:not(.reading-mode) #scriptInput {
+                    min-height: 160px;
+                    padding: 12px;
+                    font-size: 16px; /* Avoid iOS auto-zoom on focus. */
+                }
+
+                body:not(.reading-mode) #scriptName {
+                    font-size: 16px;
+                    margin-bottom: 8px;
+                }
+
+                body:not(.reading-mode) #savedScripts {
+                    margin-top: 14px;
+                    gap: 8px;
+                }
+
+                body:not(.reading-mode) .saved-script-card {
+                    padding: 12px;
+                }
+
+                body:not(.reading-mode) .camera-mode-section {
+                    margin: 12px 0;
+                    padding: 0;
+                    gap: 8px;
+                }
+
+                body:not(.reading-mode) #cameraModeButton,
+                body:not(.reading-mode) #recordVideoButton {
+                    min-width: 0;
+                    padding: 12px 6px;
+                    min-height: 48px;
+                    font-size: 14px;
+                }
+
+                body:not(.reading-mode) .teleprompter-wrapper {
+                    margin-top: 12px;
+                }
+
+                body:not(.reading-mode) .teleprompter {
+                    margin-top: 12px;
+                    padding: 14px;
+                    height: min(52dvh, 390px);
+                    min-height: 260px;
+                }
+
+                body:not(.reading-mode) .controls {
+                    margin-top: 14px;
+                }
+
+                body:not(.reading-mode) .speed-control,
+                body:not(.reading-mode) .font-control,
+                body:not(.reading-mode) .line-spacing-control {
+                    margin-top: 16px;
+                    margin-bottom: 16px;
+                }
+
+                body:not(.reading-mode) .mirror-control {
+                    margin: 12px auto;
+                    padding: 12px;
+                }
+
+                body:not(.reading-mode) .reading-guide-position-control {
+                    margin-top: 12px;
+                    padding: 12px;
+                }
+
+                /* Wider sliders and comfortable touch targets on iPhone. */
+                body:not(.reading-mode) input[type="range"] {
+                    width: min(100%, 340px);
+                    max-width: 100%;
+                    min-height: 44px;
+                    margin-top: 6px;
+                    touch-action: pan-y;
+                }
+
+                body:not(.reading-mode) button,
+                body:not(.reading-mode) select {
+                    min-height: 44px;
+                    touch-action: manipulation;
+                }
+        }
+
+        @media (max-width: 600px) and (orientation: landscape) {
+            body:not(.reading-mode) .teleprompter {
+                height: 55dvh;
+                min-height: 190px;
+            }
+
+            body:not(.reading-mode) #scriptInput {
+                min-height: 110px;
+            }
+        }
     </style>
 
 </head>
@@ -2010,8 +2135,12 @@
         const savedFontSize =
             localStorage.getItem(FONT_STORAGE_KEY);
 
-        if (savedFontSize !== null) {
+        // New mobile users start at 36px; existing preferences take priority.
+        if (savedFontSize === null && window.innerWidth <= 600) {
+            fontSlider.value = 36;
+        }
 
+        if (savedFontSize !== null) {
             const size = Number(savedFontSize);
 
             if (size >= 18 && size <= 60) {
