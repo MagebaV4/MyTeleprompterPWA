@@ -266,9 +266,12 @@
             body.reading-mode .controls button {
                 flex: 1 1 0;
                 min-width: 0;
-                padding: 10px 3px;
-                font-size: 12px;
-                white-space: nowrap;
+                box-sizing: border-box;
+                padding: 10px 2px;
+                font-size: clamp(9px, 2.5vw, 12px);
+                white-space: normal;
+                overflow-wrap: normal;
+                line-height: 1.2;
             }
 
             /* STEP 49.8 - AUTO-HIDE FULL-SCREEN CONTROLS */
